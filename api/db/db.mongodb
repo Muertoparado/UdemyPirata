@@ -1,0 +1,194 @@
+import { ObjectId } from "mongodb";
+
+use("Udemy");
+db.createCollection("login",{
+    validator: {
+        bsonType: "object",
+        required: ["_id","name", "email", "password"],
+        properties: {
+            _id:{
+                bsonType:"objectId"
+        },
+            name: {
+                bsonType: "string",
+                description: "must be a string and is required"
+            },
+            email: {
+                bsonType: "string",
+                description: "must be in a valid email format"
+            },
+            password: {
+                bsonType: "string",
+                minLength: 8,
+                description: "must be a string and at least 8 characters long"
+            }
+        }
+    }
+});
+
+use("Udemy");
+db.createCollection("login");
+
+use("Udemy");
+db.createCollection("curso", {
+validator: {
+    $jsonSchema: {
+    bsonType: "object",
+    required: ["_id", "nombre", "descripcion", "modulos"],
+    properties: {
+        _id: {
+        bsonType: "objectId",
+        description: "ID del curso",
+        },
+        nombre: {
+            bsonType: "string",
+            description: "Nombre del curso",
+          },
+          descripcion: {
+            bsonType: "string",
+            description: "Descripción del curso",
+          },
+          modulos: {
+            bsonType: "object", // Ahora se espera un objeto JSON en "modulos"
+            description: "Módulos del curso (objeto JSON)",
+            patternProperties: {
+              "^[0-9]+$": {
+                bsonType: "object", // Se espera un objeto JSON para cada módulo
+                properties: {
+                  sectionName: {
+                    bsonType: "string",
+                    description: "Nombre de la sección",
+                  },
+                  videos: {
+                    bsonType: "array", // Se espera un array de videos
+                    items: {
+                      bsonType: "object", // Se espera un objeto JSON para cada video
+                      properties: {
+                        Titulo: {
+                          bsonType: "string",
+                          description: "Título del video",
+                        },
+                        video: {
+                          bsonType: "string",
+                          description: "Nombre del video",
+                        },
+                        links: {
+                          bsonType: "object", // Se espera un objeto JSON para los links
+                        },
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          },
+          autor: {
+            bsonType: "string",
+            description: "Autor del curso",
+          },
+          fecha_creacion: {
+            bsonType: "date",
+            description: "Fecha de creación del curso",
+          }
+        },
+      },
+    },
+  });
+
+use("Udemy");
+db.curso.insertOne({
+_id:ObjectId('64f6935e6281ccb1a9338440'),
+nombre: "react",
+descripcion: "this course is the best",
+modulos: {
+    "1": {
+    "sectionName": "Sección 1: Introducción",
+    "videos": [
+    {
+    "1": {
+    "Titulo": "Introducción al curso",
+    "video": "react-1-01-Introducción",
+    "links": {}
+    }
+    },
+    {
+    "2": {
+    "Titulo": "¿Cómo funcionará el curso?",
+    "video": "react-1-02-Como_funcionara_el_curso",
+    "links": {}
+    }
+    },
+    {
+    "3": {
+    "Titulo": "¿Cómo hacer preguntas?",
+    "video": "react-1-03-Como-hacer-preguntas",
+    "links": {}
+    }
+    },
+    {
+    "4": {
+    "Titulo": "Instalaciones necesarias y recomendadas",
+    "video": "react-1-04-Instalaciones_necesarias_y_recomendadas",
+    "links": [
+    {
+    "titulo-link": "Instalaciones necesarias",
+    "link": "https://gist.github.com/Klerith/4a4abfd88a88b2d1f16efd95fea41362"
+    }
+    ]
+    }
+    }
+    ]
+    },
+    "2": {
+    "sectionName": "Sección 2: Introducción a React y conceptos generales",
+    "videos": [
+    {
+    "1": {
+    "Titulo": "Introducción a la sección",
+    "video": "react-2-01-Introducción",
+    "links": {}
+    }
+    },
+    {
+    "2": {
+    "Titulo": "Temas puntuales de la sección",
+    "Texto": "Temas puntuales de la sección\n¿Qué aprenderemos en esta sección?\n\n¿Qué es React?\n\nConceptos generales\n\nBabel\n\nJSX\n\nDaremos nuestros primeros pasos y una pequeña aplicación que nos ayudará a perderle el miedo a React rápidamente"
+    }
+    },
+    {
+    "3": {
+    "Titulo": "¿Qué es React?",
+    "video": "react-2-02-Que_es_React",
+    "links": {}
+    }
+    },
+    {
+    "4": {
+    "titulo": "Primeros pasos en React",
+    "video": "react-2-03-Primeros_pasos_en_React",
+    "links": {
+    "1": {
+    "titulo-link": "React-index.html Demo",
+    "link": "https://gist.github.com/Klerith/b0111f52ba16451d095f38d4c995605b"
+    }
+    }
+    }
+    },
+    {
+    "5": {
+    "Titulo": "Introducción a Babel",
+    "video": "react-2-04-Introduccion_a_Babel",
+    "links": [
+    {
+    "titulo-link": "Babeljs.io - Sitio oficial",
+    "link": "https://babeljs.io/"
+    }
+    ]
+    }
+    }
+    ]
+},
+autor: "pepito asdas",
+fecha_creacion:"2021-09-20"
+}
+})
