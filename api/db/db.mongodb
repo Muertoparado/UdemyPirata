@@ -1,29 +1,32 @@
 import { ObjectId } from "mongodb";
 
 use("Udemy");
-db.createCollection("login",{
-    validator: {
-        bsonType: "object",
-        required: ["_id","name", "email", "password"],
-        properties: {
-            _id:{
-                bsonType:"objectId"
-        },
-            name: {
-                bsonType: "string",
-                description: "must be a string and is required"
-            },
-            email: {
-                bsonType: "string",
-                description: "must be in a valid email format"
-            },
-            password: {
-                bsonType: "string",
-                minLength: 8,
-                description: "must be a string and at least 8 characters long"
-            }
-        }
-    }
+db.createCollection("login", {
+  validator: {
+      $jsonSchema: {
+          bsonType: "object",
+          required: ["_id", "name", "email", "password"],
+          properties: {
+              _id: {
+                  bsonType: "string"
+              },
+              name: {
+                  bsonType: "string",
+                  description: "must be a string and is required"
+              },
+              email: {
+                  bsonType: "string",
+                  pattern: "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$",
+                  description: "must be in a valid email format"
+              },
+              password: {
+                  bsonType: "string",
+                  minLength: 8,
+                  description: "must be a string and at least 8 characters long"
+              }
+          }
+      }
+  }
 });
 
 
@@ -96,8 +99,8 @@ validator: {
 
 use("Udemy");
 db.curso.insertOne({
-_id:ObjectId('64f6935e6281ccb1a9338440'),
-nombre: "react",
+_id:ObjectId('64f6935e6281ccb1a9338441'),
+nombre: "sql",
 descripcion: "this course is the best",
 modulos: {
     "1": {
@@ -187,7 +190,7 @@ modulos: {
     }
     ]
 },
-autor: "pepito asdas",
-fecha_creacion:"2021-09-20"
+autor: "aaaaaaa asdas",
+fecha_creacion:"2023-09-20"
 }
 })

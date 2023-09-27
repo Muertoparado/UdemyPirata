@@ -18,7 +18,8 @@ export async function getCursoNom(req, res) {
     try {
         const db = await con();
         const collection = db.collection("curso");
-        const CursosNom = parseInt(req.params.nombre);
+        const CursosNom =req.params.nombre;
+        console.log(CursosNom);
         const Cursos = await collection.findOne({ nombre:CursosNom });
 
         if (!Cursos) {

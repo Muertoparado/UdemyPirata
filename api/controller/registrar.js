@@ -23,7 +23,7 @@ export async function registerlogin(req, res) {
 		const hashedPassword = await hashPassword(password, salt);
 	
 		const newlogin = {
-            _id: new ObjectId(),
+            _id: new ObjectId().toString(),
 			name: name,
 			email: email,
     		password: hashedPassword, // Include only the hashed password
@@ -41,6 +41,10 @@ export async function registerlogin(req, res) {
 	});
 	}
 } catch (err) {
+	if (err.code === 121) {
+		err.errInfo.details.clausesNotSatisfied.forEach(clause => {
+            console.log(clause.details);
+        });}
 	console.error("Error al insertar documento:", err);
 	if (err.code === 11000) {
 	  return res.status(400).json({ message: "El correo electrónico ya está en uso" });

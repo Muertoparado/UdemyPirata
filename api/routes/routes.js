@@ -4,6 +4,7 @@ import session from 'express-session';
 import {loginUser,regLogin} from '../storage/dtoLogin.js';
 import { registerlogin,changePassword,logIn,logout } from "../controller/registrar.js";
 import { getCursoNom, getCursos } from "../controller/cursos.js";
+import { limitQuery } from "../limit/config.js";
 
 function configurarApp() {
     const app = express();
@@ -20,13 +21,13 @@ const appLogin = configurarApp();
 const appBack = configurarApp();
 //const appUtil = configurarApp();
 
-appLogin.post("/",loginUser,logIn);
-appLogin.post("/register",regLogin,registerlogin);
-appLogin.post("/cpass",changePassword);
+appLogin.post("/",limitQuery(),loginUser,logIn);
+appLogin.post("/register",limitQuery(),regLogin,registerlogin);
+appLogin.post("/cpass",limitQuery(),changePassword);
 appLogin.post("/fin",logout);
 
-appBack.get("/react",getCursos);
-//appBack.get("/:nombre",getCursoNom);
+appBack.get("/react",limitQuery(),getCursos);
+appBack.get("/:nombre",limitQuery(),getCursoNom);
 
 
 export {
