@@ -26,7 +26,7 @@ export async function registerlogin(req, res) {
             _id: new ObjectId().toString(),
 			name: name,
 			email: email,
-    		password: hashedPassword, // Include only the hashed password
+			password: hashedPassword, // Include only the hashed password
     };
 		console.log("Inserting document:", newlogin);
         await colleccion.insertOne(newlogin);
@@ -47,12 +47,12 @@ export async function registerlogin(req, res) {
         });}
 	console.error("Error al insertar documento:", err);
 	if (err.code === 11000) {
-	  return res.status(400).json({ message: "El correo electrónico ya está en uso" });
+		return res.status(400).json({ message: "El correo electrónico ya está en uso" });
 	} else if (err.code === 121) {
-	  // Handle validation error more explicitly
-	  return res.status(400).json({ message: "Documento no válido. Verifique los datos enviados." });
+	// Handle validation error more explicitly
+		return res.status(400).json({ message: "Documento no válido. Verifique los datos enviados." });
 	}
-	return res.status(500).json({ message: err.message });
+		return res.status(500).json({ message: err.message });
   }
 }
 
@@ -84,7 +84,7 @@ export async function logIn (req, res){
 }catch(error){
 		console.error(error); // Log the error to the console
 		return res.status(500).json({ message: "Error interno del servidor" });
-};
+}
 }	
 
 export async function changePassword (req, res) {
@@ -114,15 +114,14 @@ export async function changePassword (req, res) {
 			}
 		);
 		res.status(200).json(updatedlogin);
-	  } catch (error) {
+	} catch (error) {
 			return res.status(500).json({
 			message: "Server Error"
 		});
-	  }
-	  
-};
+	}
+}
 
 export async function logout (req, res) {
 	res.clearCookie("jwt");
     res.status(200).json({ message: "Logged out" });
-};
+}
