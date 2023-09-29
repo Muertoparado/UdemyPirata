@@ -194,3 +194,37 @@ autor: "aaaaaaa asdas",
 fecha_creacion:"2023-09-20"
 }
 })
+
+use("Udemy");
+db.createCollection("login", {
+  validator: {
+      $jsonSchema: {
+          bsonType: "object",
+          required: ["_id", "name", "email"],
+          properties: {
+              _id: {
+                  bsonType: "string"
+              },
+              name: {
+                  bsonType: "string",
+                  description: "must be a string and is required"
+              },
+              email: {
+                  bsonType: "string",
+                  pattern: "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$",
+                  description: "must be in a valid email format"
+              },
+              fecha_creacion: {
+                  bsonType: "date",
+                  description: "must be a date"
+              },
+              cursos:{
+                bsonType : 'array',
+              },
+              historial:{
+                bsonType:'array'
+              }
+          }
+      }
+  }
+});
