@@ -1,5 +1,5 @@
 import { con} from "../db/atlas.js";
-import { Collection, Db, ObjectId } from "mongodb";
+import { ObjectId } from "mongodb";
 
 export async function getCursosf(req, res) {
     try {
@@ -113,8 +113,9 @@ export async function calcularPromedioEstrellas(idCurso) {
       ]).toArray();
   
       console.log(result[0].promedioEstrellas);
-    } finally {
-      await Db.close();
+    } catch (error) {
+        console.error(error);
+        res.status(500).send({ status:500, message: "Internal Server Error" });
     }
   }
   
