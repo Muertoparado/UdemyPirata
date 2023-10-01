@@ -27,6 +27,7 @@ export async function registerlogin(req, res) {
 			name: name,
 			email: email,
 			password: hashedPassword, // Include only the hashed password
+			rol:'Estudiante'
     };
 		console.log("Inserting document:", newlogin);
         await colleccion.insertOne(newlogin);
@@ -124,4 +125,48 @@ export async function changePassword (req, res) {
 export async function logout (req, res) {
 	res.clearCookie("jwt");
     res.status(200).json({ message: "Logged out" });
+}
+
+export async function assignRoleToUser(username, role) {
+	try {
+		const db = await con();
+		const user = await db.collection('login').findOne({ email: username });
+
+		if (!user) {
+		console.log(`Usuario ${username} no encontrado.`);
+		return;
+		}
+		db.adminCommand({
+		createUser: user.name,
+		pwd: user.password,
+		roles: [ { role: role, db: process.env.ATLAS_DB } ]
+		});
+
+		console.log(`Rol ${role} asignado al usuario ${username}.`);
+	} catch (err) {
+		console.error("Error al asignar rol:", err);
+	}
+}
+
+
+export async function updateUserRole(req, res) {
+  const { userId } = req.params;
+  const { role } = req.body;
+
+  try {
+    const db = await con();
+    const result = await db.collection('login').updateOne(
+      { _id: userId },
+      { $set: { role: role } }
+    );
+
+    if (result.modifiedCount === 1) {
+      res.status(200).json({ message: 'Rol actualizado correctamente' });
+    } else {
+      res.status(404).json({ message: 'Usuario no encontrado' });
+    }
+  } catch (err) {
+    console.error("Error al actualizar el rol del usuario:", err);
+    res.status(500).json({ message: err.message });
+  }
 }

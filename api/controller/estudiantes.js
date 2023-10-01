@@ -1,14 +1,74 @@
-//appBack.get("/estudiantes/cursos",limitQuery());//ver cursos de cada usuario
-//appBack.get("/estudiantes/historial",limitQuery())//ver ultima seccion vista 
+import { con } from "../db/atlas.js";
+import { ObjectId } from "mongodb";
 
-import { con } from "../db/atlas";
 
-export async function estuCursos(){
+export async function getCursosUser(userId){
     try {
-        const db = await con();
-		let colleccion = db.collection("login");
-        
+        let db = await con();
+        let colleccion = db.collection("usuario");
+        let user = await colleccion.findOne({
+            _id: ObjectId(userId)
+        }, {
+            projection: { cursos: 1 }
+        });
+        return user.cursos;
     } catch (error) {
-        
+        console.error(error);
     }
 }
+
+export async function updateModuloVisto(req, res){
+    try{
+        let db = await con();
+        let colleccion = db.collection("usuarios");
+        let data = req.body;
+        const historial = {
+            modulo: data.idModulo,
+            fecha: new Date()
+        };
+        await colleccion.updateOne(
+            { _id: ObjectId(data.idUsuario) },
+            { $push: { historial: historial }, $set: { ultimoModuloVisto: data.idModulo } }
+        );
+        res.status(200).send({ status:200, message: "Updated" });
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).send({ status:500, message: "Internal Server Error" });
+    }
+}
+
+export async function postUltimoModulo(idUsuario, idModulo) {
+    try {
+        let db = await con();
+        let colleccion = db.collection("usuarios");
+        const historial = {
+            modulo: idModulo,
+            fecha: new Date()
+        };
+        await colleccion.updateOne(
+            { _id: ObjectId(idUsuario) },
+            { $push: { historial: historial }, $set: { ultimoModuloVisto: idModulo } }
+        );
+        console.log("Último módulo visto guardado con éxito");
+    } catch (error) {
+        console.error("Error al guardar el último módulo visto:", error);
+    }
+}
+export async function postAgregarCurso(idUsuario, nuevoCurso) {
+    try {
+        let db = await con();
+        let colleccion = db.collection("usuarios");
+        await colleccion.updateOne(
+            { _id: ObjectId(idUsuario) },
+            { $push: { cursos: nuevoCurso } }
+        );
+        console.log("Nuevo curso agregado con éxito");
+    } catch (error) {
+        console.error("Error al agregar el nuevo curso:", error);
+    }
+}
+
+
+
+

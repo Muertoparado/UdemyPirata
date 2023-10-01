@@ -91,7 +91,28 @@ validator: {
           fecha_creacion: {
             bsonType: "date",
             description: "Fecha de creación del curso",
-          }
+          },
+          comentarios: {
+            bsonType: "array",
+            description: "Comentarios del curso",
+            items: {
+              bsonType: "object",
+              properties: {
+                comentario: {
+                  bsonType: "string",
+                  description: "Comentario del usuario",
+                },
+                fecha: {
+                  bsonType: "date",
+                  description: "Fecha del comentario",
+                },
+                estrellas: {
+                  bsonType: "int",
+                  description: "Calificación de estrellas del usuario",
+                },
+              },
+            },
+          },
         },
       },
     },
@@ -196,7 +217,7 @@ fecha_creacion:"2023-09-20"
 })
 
 use("Udemy");
-db.createCollection("login", {
+db.createCollection("usuario", {
   validator: {
       $jsonSchema: {
           bsonType: "object",
@@ -225,6 +246,7 @@ db.createCollection("login", {
                 bsonType:'array'
               }
           }
+        }
       }
   }
-});
+);
