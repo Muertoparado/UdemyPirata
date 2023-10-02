@@ -9,7 +9,7 @@ export default defineConfig({
   },
   // Configuración del servidor WebSockets
   socket: {
-    port: 8080,
+    port: 5900,
   },
   // Configuración de los plugins
   plugins: [react()],
