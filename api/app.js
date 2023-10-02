@@ -23,7 +23,7 @@ app.use(cors({
   credentials:true,
 }))
 //app.use(saveRol);
-app.use("/login",appLogin,cors({ origin: '*' }));
+app.use("/login",appLogin);
 app.use("/curso",verifyTokenMiddleware,appBack);
 
 let config = JSON.parse(process.env.MY_SERVER);

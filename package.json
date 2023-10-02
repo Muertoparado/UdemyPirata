@@ -25,7 +25,9 @@
   },
   "dependencies": {
     "buffer": "^6.0.3",
+    "cookies": "^0.8.0",
     "fetch": "^1.1.0",
+    "jose": "^4.15.1",
     "node-fetch": "^3.3.2",
     "package-name": "^0.1.0",
     "react-query": "^3.39.3",

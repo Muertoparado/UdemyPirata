@@ -1,14 +1,14 @@
 
 import React, { useState, useEffect } from 'react';
 
-export default function CursosGeneral() {
+export default function CursosGeneral(token) {
   const [cursos, setCursos] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
     // Crear el socket WebSocket
-    const socket = new WebSocket('wss://127.0.0.1:5500/ws');
+    /*const socket = new WebSocket('wss://127.0.0.1:5900/ws');
   
     // Manejar los eventos del socket WebSocket
     socket.onerror = (error) => {
@@ -25,14 +25,15 @@ export default function CursosGeneral() {
   
     socket.onclose = () => {
       console.log('WebSocket connection closed');
-    };
-  
+    };*/
+
     // Realizar la consulta a la API
-    const response = fetch(`http://${import.meta.env.VITE_HOSTNAME}:${import.meta.env.VITE_PORT_BACKEND}/login`, {
+    const response = fetch(`http://${import.meta.env.VITE_HOSTNAME}:${import.meta.env.VITE_PORT_BACKEND}/curso/cursos`, {
       method: 'GET',
       credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`,
       },
     })
       .then(async (response) => {
@@ -52,11 +53,11 @@ export default function CursosGeneral() {
         setError(error.message);
         setLoading(false);
       });
-  
+  /*
     // Devolver una función de limpieza para cerrar el socket WebSocket
     return () => {
       socket.close();
-    };
+    };*/
   }, []);
 
   if (loading) {
