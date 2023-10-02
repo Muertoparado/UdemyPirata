@@ -1,7 +1,9 @@
 
 import React, { useState, useEffect } from 'react';
-
-export default function CursosGeneral(token) {
+import  { useContext } from 'react';
+import { TokenContext } from '../main.jsx';
+export default function CursosGeneral() {
+  const token = useContext(TokenContext);
   const [cursos, setCursos] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
