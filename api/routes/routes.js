@@ -3,7 +3,7 @@ import cookieParser from 'cookie-parser';
 import session from 'express-session';
 import {loginUser,regLogin} from '../storage/dtoLogin.js';
 import { registerlogin,changePassword,logIn,logout, assignRoleToUser } from "../controller/registrar.js";
-import { calcularPromedioEstrellas, getCursoNom, getCursosf, getCursosn, getcAutor, postCom } from "../controller/cursos.js";
+import { calcularPromedioEstrellas, getCursoId, getCursoNom, getCursosf, getCursosn, getcAutor, postCom } from "../controller/cursos.js";
 import { limitQuery } from "../limit/config.js";
 import { getAllUsers } from "../controller/superAdmin.js";
 import { getCursosEduador, postModulo, postNewCurso, updateModulo } from "../controller/educador.js";
@@ -35,7 +35,8 @@ appLogin.post("/superadmin/roles",limitQuery(), assignRoleToUser);
 
 appBack.get("/cursos",limitQuery(),getCursosn);//ordenados nombre
 appBack.get("/cursos/fecha",limitQuery(),getCursosf)//ordenados por fechas 
-appBack.get("curso/:nombre",limitQuery(),getCursoNom);//curso nombre
+appBack.get("cursonom/:nombre",limitQuery(),getCursoNom);//curso nombre
+appBack.get("cursoid/:id",limitQuery(),getCursoId);//curso id
 appBack.get("/cursos/:autor",limitQuery(),getcAutor); //busqueda por autor
 appBack.post("/curso/:autor/comentario",limitQuery(),postCom)//agregar comentario autor curso (implementar estrallas)
 appBack.post("/educador",limitQuery(),postNewCurso)//seccion educador 

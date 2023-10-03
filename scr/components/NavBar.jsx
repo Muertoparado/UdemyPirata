@@ -14,7 +14,7 @@ export default function Navbar() {
               <a className="nav-link active" aria-current="page" href="#">Cursos</a>
             </li>
             <li className="nav-item">
-              <Link to="./eduCursos" onClick={() => window.open('./EduCursos.jsx', '_blank')}>Mis cursos</Link>
+              <Link to="/miscursos" onClick={() => window.open('/miscursos', '_blank')}>Mis cursos</Link>
             </li>
             <li className="nav-item">
               <a className="nav-link " aria-disabled="true">Educadores</a>

@@ -18,8 +18,30 @@ export async function getCursosn(req, res) {
     try {
         let db = await con();
         let colleccion = db.collection("curso");
-        let results = await colleccion.find({}).sort({ nombre: 1 }).toArray();
+        let results = await colleccion.find({}).sort({ fecha_creacion: 1 }).toArray();
         results.length > 0 ? res.send(results).status(200) : res.status(404).send({ status: 404, message: "No Encontrado" })
+
+    } catch (error) {
+        console.log(error); 
+        res.status(500).send({ status: 500, message: "Internal Server Error" });
+    }
+}
+
+
+export async function getCursoId(req, res) {
+    try {
+        let db = await con();
+        let colleccion = db.collection("curso");
+        const id =req.params.id;
+        let results = await colleccion.find({$eq:{
+            _id:id
+        }});
+        
+        if (!results) {
+            return res.status(404).send({ status: 404, message: "curso id no encontrado" });
+        }
+        res.status(200).json(results);
+       // res.send(results);
 
     } catch (error) {
         console.log(error); 
@@ -84,7 +106,7 @@ export async function deleteCursos(req, res){
     }
 }
 
-export async function getcAutor(){
+export async function getcAutor(req,res){
     try {
         const db = await con();
         const collection = db.collection("curso");

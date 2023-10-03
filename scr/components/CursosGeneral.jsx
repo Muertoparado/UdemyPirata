@@ -1,4 +1,4 @@
-
+/*
 import React, { useState, useEffect } from 'react';
 import  { useContext } from 'react';
 import { TokenContext } from '../main.jsx';
@@ -8,33 +8,13 @@ import Curso from './CursoEspecifico.jsx';
 export default function CursosGeneral() {
   const token = useContext(TokenContext);
   const [isExpanded, setExpanded] = useState(false);
-  const [cursos, setCursos] = useState([]);
+  const [eduCurso, setEduCurso] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    // Crear el socket WebSocket
-    /*const socket = new WebSocket('wss://127.0.0.1:5900/ws');
-  
-    // Manejar los eventos del socket WebSocket
-    socket.onerror = (error) => {
-      console.error('WebSocket connection error:', error);
-    };
-  
-    socket.onopen = () => {
-      console.log('WebSocket connection established');
-    };
-  
-    socket.onmessage = (event) => {
-      console.log('Received message:', event.data);
-    };
-  
-    socket.onclose = () => {
-      console.log('WebSocket connection closed');
-    };*/
-
     // Realizar la consulta a la API
-    const response = fetch(`http://${import.meta.env.VITE_HOSTNAME}:${import.meta.env.VITE_PORT_BACKEND}/curso/cursos`, {
+    const response = fetch(`http://${import.meta.env.VITE_HOSTNAME}:${import.meta.env.VITE_PORT_BACKEND}/curso/educador/miscursos`, {
       method: 'GET',
       credentials: 'include',
       headers: {
@@ -49,7 +29,7 @@ export default function CursosGeneral() {
         } else {
           const data = await response.json();
           console.log(data);
-          setCursos(data);
+          setEduCurso(data);
           setLoading(false);
         }
       })
@@ -63,7 +43,7 @@ export default function CursosGeneral() {
     // Devolver una función de limpieza para cerrar el socket WebSocket
     return () => {
       socket.close();
-    };*/
+    };
   }, []);
 
   if (loading) {
@@ -76,15 +56,15 @@ export default function CursosGeneral() {
 
   return (
     <div>
-      {cursos.map((curso) => (
+      {eduCurso.map((curso) => (
         <div className='card p-5 m-5' key={curso.id}>
            <img src={curso.imagen} alt={curso.nombre} />
           <h2>{curso.nombre}</h2>
           <p>{curso.descripcion}</p>
 
-          <button onClick={() => setExpanded(curso)}>
-            {isExpanded === curso ? 'Ocultar' : 'Mostrar'}
-          </button>
+          <Link to={`/curso-especifico/${curso.id}`}>
+            <button>Ver más</button>
+          </Link>
 
           {isExpanded === curso && (
            <Link to={`./CursoEspecifico/${curso.id}`}>
@@ -99,6 +79,7 @@ export default function CursosGeneral() {
     </div>
   );
 }
+
 
 /*import React, { useState, useEffect, useRef } from "react";
 import { useQuery } from "react-query";
@@ -141,3 +122,87 @@ function fetchCursosDefault({ url }) {
   return fetch(url);
 }
 */
+
+import React, { useState, useEffect } from 'react';
+import  { useContext } from 'react';
+import { TokenContext } from '../main.jsx';
+import '../styles/styles.css'
+import Curso from './CursoEspecifico.jsx';
+import { ErrorBoundary } from 'react-error-boundary';
+
+export default function CursosGeneral() {
+  const token = useContext(TokenContext);
+  const [isExpanded, setExpanded] = useState(false);
+  const [eduCurso, setEduCurso] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    // Realizar la consulta a la API
+    const response = fetch(`http://${import.meta.env.VITE_HOSTNAME}:${import.meta.env.VITE_PORT_BACKEND}/curso/educador/miscursos`, {
+      method: 'GET',
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`,
+      },
+    })
+      .then(async (response) => {
+        // Manejar la respuesta de la API
+        if (!response.ok) {
+          console.log(response.status, response.statusText);
+        } else {
+          const data = await response.json();
+          console.log(data);
+          setEduCurso(data);
+          setLoading(false);
+        }
+      })
+      .catch((error) => {
+        // Manejar el error de la API
+        console.log(error);
+        setError(error.message);
+        setLoading(false);
+      });
+  /*
+    // Devolver una función de limpieza para cerrar el socket WebSocket
+    return () => {
+      socket.close();
+    };*/
+  }, []);
+
+  if (loading) {
+    return <p>Cargando cursos...</p>;
+  }
+
+  if (error) {
+    return <p>Error: {error}</p>;
+  }
+
+  return (
+    <ErrorBoundary>
+      <div>
+        {eduCurso.map((curso) => (
+          <div className='card p-5 m-5' key={curso.id}>
+             <img src={curso.imagen} alt={curso.nombre} />
+            <h2>{curso.nombre}</h2>
+            <p>{curso.descripcion}</p>
+
+            <Link to={`./CursoEspecifico/${curso.id}`}>
+              <button>Ver más</button>
+            </Link>
+
+            {isExpanded === curso && (
+           <Link to={`./CursoEspecifico/${curso.id}`}>
+          
+           <Curso curso={curso} />
+           
+         </Link>
+          )}
+
+        </div>
+      ))}
+    </div>
+    </ErrorBoundary>
+  );
+}

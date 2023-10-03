@@ -8,7 +8,7 @@ import Curso from './CursoEspecifico.jsx';
 export default function eduCursos() {
   const token = useContext(TokenContext);
   const [isExpanded, setExpanded] = useState(false);
-  //const [eduCurso, eduCurso] = useState([]);
+  const [eduCurso, seteduCurso] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -30,7 +30,7 @@ export default function eduCursos() {
         } else {
           const data = await response.json();
           console.log(data);
-          setCursos(data);
+          seteduCurso(data);
           setLoading(false);
         }
       })

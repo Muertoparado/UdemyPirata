@@ -5,7 +5,7 @@ export default function Login() {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [showPassword, setShowPassword] = useState(false); // New state variable
-    const [token, setToken] = useState("");
+    const [token, setToken] = useState();
     const navigate = useNavigate();
 
     const handleSubmit = async (event) => {
