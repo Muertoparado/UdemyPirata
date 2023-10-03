@@ -5,36 +5,17 @@ import { TokenContext } from '../main.jsx';
 import '../styles/styles.css'
 import Curso from './CursoEspecifico.jsx';
 
-export default function CursosGeneral() {
+export default function eduCursos() {
   const token = useContext(TokenContext);
   const [isExpanded, setExpanded] = useState(false);
-  const [cursos, setCursos] = useState([]);
+  //const [eduCurso, eduCurso] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    // Crear el socket WebSocket
-    /*const socket = new WebSocket('wss://127.0.0.1:5900/ws');
-  
-    // Manejar los eventos del socket WebSocket
-    socket.onerror = (error) => {
-      console.error('WebSocket connection error:', error);
-    };
-  
-    socket.onopen = () => {
-      console.log('WebSocket connection established');
-    };
-  
-    socket.onmessage = (event) => {
-      console.log('Received message:', event.data);
-    };
-  
-    socket.onclose = () => {
-      console.log('WebSocket connection closed');
-    };*/
 
     // Realizar la consulta a la API
-    const response = fetch(`http://${import.meta.env.VITE_HOSTNAME}:${import.meta.env.VITE_PORT_BACKEND}/curso/cursos`, {
+    const response = fetch(`http://${import.meta.env.VITE_HOSTNAME}:${import.meta.env.VITE_PORT_BACKEND}/curso/educador/miscursos`, {
       method: 'GET',
       credentials: 'include',
       headers: {
@@ -76,7 +57,7 @@ export default function CursosGeneral() {
 
   return (
     <div>
-      {cursos.map((curso) => (
+      {eduCurso.map((curso) => (
         <div className='card p-5 m-5' key={curso.id}>
            <img src={curso.imagen} alt={curso.nombre} />
           <h2>{curso.nombre}</h2>
@@ -99,45 +80,3 @@ export default function CursosGeneral() {
     </div>
   );
 }
-
-/*import React, { useState, useEffect, useRef } from "react";
-import { useQuery } from "react-query";
-
-export default function CursosGeneral() {
-  const [cursos, setCursos] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-
-  const query = useQuery("cursos", () => fetchCursosDefault({ url: `http://127.1.1.1:5900/curso/cursos` }));
-
-  useEffect(() => {
-    setIsLoading(true);
-  }, []);
-
-  useEffect(() => {
-    if (query.status === "success") {
-      setCursos(query.data);
-      setIsLoading(false);
-    }
-  }, [query]);
-
-  if (isLoading) {
-    return <p>Cargando cursos...</p>;
-  }
-
-  return (
-    <div>
-      {cursos.map((curso) => (
-        <div key={curso.id}>
-          <h2>{curso.nombre}</h2>
-          <p>{curso.descripcion}</p>
-          <img src={curso.imagen} alt={curso.nombre} />
-        </div>
-      ))}
-    </div>
-  );
-}
-
-function fetchCursosDefault({ url }) {
-  return fetch(url);
-}
-*/
