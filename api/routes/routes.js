@@ -35,10 +35,11 @@ appLogin.post("/superadmin/roles",limitQuery(), assignRoleToUser);
 
 appBack.get("/cursos",limitQuery(),getCursosn);//ordenados nombre
 appBack.get("/cursos/fecha",limitQuery(),getCursosf)//ordenados por fechas 
-appBack.get("cursonom/:nombre",limitQuery(),getCursoNom);//curso nombre
-appBack.get("cursoid/:id",limitQuery(),getCursoId);//curso id
+appBack.get("curso/:nombre",limitQuery(),getCursoNom);//curso nombre
 appBack.get("/cursos/:autor",limitQuery(),getcAutor); //busqueda por autor
 appBack.post("/curso/:autor/comentario",limitQuery(),postCom)//agregar comentario autor curso (implementar estrallas)
+
+
 appBack.post("/educador",limitQuery(),postNewCurso)//seccion educador 
 appBack.get("/educador/miscursos",limitQuery(),getCursosEduador)//cursos educador
 appBack.post("/educador/modulo",limitQuery(),postModulo)//subir curso por modulo

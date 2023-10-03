@@ -26,35 +26,44 @@ export async function getCursosn(req, res) {
         res.status(500).send({ status: 500, message: "Internal Server Error" });
     }
 }
-
-
-export async function getCursoId(req, res) {
-    try {
-        let db = await con();
-        let colleccion = db.collection("curso");
-        const id =req.params.id;
-        let results = await colleccion.find({$eq:{
-            _id:id
-        }});
-        
-        if (!results) {
-            return res.status(404).send({ status: 404, message: "curso id no encontrado" });
-        }
-        res.status(200).json(results);
-       // res.send(results);
-
-    } catch (error) {
-        console.log(error); 
-        res.status(500).send({ status: 500, message: "Internal Server Error" });
-    }
-}
 export async function getCursoNom(req, res) {
     try {
         const db = await con();
         const collection = db.collection("curso");
-        const CursosNom =req.params.nombre;
+        const CursosNom = req.params.nombre;
         console.log(CursosNom);
-        const Cursos = await collection.findOne({ nombre:CursosNom });
+        const Cursos = collection.find({
+            nombre: CursosNom
+        });
+
+        if (!Cursos) {
+            return res.status(404).send({ status: 404, message: "Cursos no encontrado" });
+        }
+
+        Cursos.forEach((curso) => {
+            console.log(curso);
+            res.send(curso).status(200);
+        });
+
+        
+    
+    } catch (error) {
+        console.error(error);
+        res.status(500).send({ status: 500, message: "Error interno del servidor" });
+    }
+}
+
+
+/*
+export async function getCursoNom(req, res) {
+    try {
+        const db = await con();
+        const collection = db.collection("curso");
+        const CursosNom = req.params.nombre[0];
+        console.log(CursosNom);
+        const Cursos = collection.find({
+            nombre: { $regex: new RegExp(CursosNom, "i") }
+        });
 
         if (!Cursos) {
             return res.status(404).send({ status: 404, message: "Cursos no encontrado" });
@@ -66,6 +75,7 @@ export async function getCursoNom(req, res) {
         res.status(500).send({ status: 500, message: "Error interno del servidor" });
     }
 }
+*/
 
 export async function postCursos(req, res){
     try{
@@ -106,23 +116,26 @@ export async function deleteCursos(req, res){
     }
 }
 
-export async function getcAutor(req,res){
+export async function getcAutor(){
     try {
         const db = await con();
         const collection = db.collection("curso");
-        const autor =req.params.autor;
-        const Cursos = await collection.findOne({ autor:autor });
+        const Cursos = await collection.find({
+            autor: { $regex: new RegExp(autor, "i") }
+        });
 
         if (!Cursos) {
             return res.status(404).send({ status: 404, message: "autor no encontrado" });
         }
-        res.status(200).json(Cursos);
+        console.log(Cursos);
+        return Cursos;
     
     } catch (error) {
         console.error(error);
         res.status(500).send({ status: 500, message: "Error interno del servidor" });
     }
 }
+
 
 export async function calcularPromedioEstrellas(idCurso) {
     try {
