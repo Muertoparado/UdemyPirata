@@ -92,6 +92,15 @@ validator: {
             bsonType: "date",
             description: "Fecha de creación del curso",
           },
+          palabrasClave:{
+            bsonType: "array",
+            description: "Comentarios del curso",
+          },
+          imagen:{
+            bsonType: "string",
+            description: "imagen del curso",
+
+          },
           comentarios: {
             bsonType: "array",
             description: "Comentarios del curso",
@@ -117,6 +126,78 @@ validator: {
       },
     },
   });
+
+use("Udemy");
+db.curso.insertOne({
+  "_id":ObjectId("624a1a1c0c780c0001f4c332"),
+  "nombre": "Curso de Linux",
+  "descripcion": "Aprende linux desde cero",
+  "modulos": {
+    "sectionName": "Introducción a sql",
+    "videos": [
+      {
+        "Titulo": "Introducción a sql",
+        "video": "https://www.youtube.com/watch?v=624a1a1c0c780c0001f4c333",
+        "links": {
+          "github": "https://github.com/bard/curso-sql",
+          "website": "https://curso-sql.com",
+        },
+      },
+      {
+        "Titulo": "Variables y tipos de datos",
+        "video": "https://www.youtube.com/watch?v=624a1a1c0c780c0001f4c334",
+        "links": {
+          "github": "https://github.com/bard/curso-sql/tree/master/variables",
+          "website": "https://curso-sql.com/variables-tipos-datos",
+        },
+      },
+    ],
+  },
+  "autor": "sapo perro ",
+  "fecha_creacion": new Date(),
+  "palabrasClave": ["Linux", "curso", "programacion","hack"],
+  "imagen": "https://www.sql.org/static/img/sql-logo.png",
+  "comentarios": [
+    {
+      "comentario": "Muy buen curso",
+      "fecha": new Date(),
+      "estrellas": 5,
+    },
+    {
+      "comentario": "Me ha gustado mucho",
+      "fecha": new Date(),
+      "estrellas": 2,
+    },
+  ],
+}
+)
+
+use("Udemy");
+db.curso.updateOne({
+  "idCurso": "624a1a1c0c780c0001f4c333",
+  "moduloIndex": 2,
+  "modulo": {
+    "sectionName": "Nuevo modulo",
+    "videos": [
+      {
+        "Titulo": "Video 1",
+        "video": "https://www.youtube.com/watch?v=624a1a1c0c780c0001f4c335",
+        "links": {
+          "github": "https://github.com/bard/curso-sql/tree/master/nuevo_modulo/video_1",
+          "website": "https://curso-sql.com/nuevo_modulo/video_1",
+        },
+      },
+      {
+        "Titulo": "Video 2",
+        "video": "https://www.youtube.com/watch?v=624a1a1c0c780c0001f4c336",
+        "links": {
+          "github": "https://github.com/bard/curso-sql/tree/master/nuevo_modulo/video_2",
+          "website": "https://curso-sql.com/nuevo_modulo/video_2",
+        },
+      },
+    ],
+  },
+})
 
 use("Udemy");
 db.curso.insertOne({
@@ -224,11 +305,15 @@ db.createCollection("usuario", {
           required: ["_id", "name", "email"],
           properties: {
               _id: {
-                  bsonType: "string"
+                  bsonType: "objectId"
               },
               name: {
                   bsonType: "string",
                   description: "must be a string and is required"
+              },
+              imagen:{
+                bsonType: "string",
+                description: "must be a string"
               },
               email: {
                   bsonType: "string",
@@ -244,6 +329,9 @@ db.createCollection("usuario", {
               },
               historial:{
                 bsonType:'array'
+              },
+              rol:{
+                bsonType :"string",
               }
           }
         }

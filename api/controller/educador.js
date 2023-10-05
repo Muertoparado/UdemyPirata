@@ -21,6 +21,32 @@ export async function postModulo(req, res){
     }
 }
 
+export async function postNewCurso(req, res) {
+    // Obtenemos la conexión a MongoDB.
+    let db = await con();
+  
+    // Obtenemos la colección de cursos.
+    let colleccion = db.collection("curso");
+  
+    // Obtenemos el documento JSON del curso.
+    const documento = req.body;
+  
+    // Creamos un objeto `newCurso` vacío.
+    const newCurso = {
+      _id: new ObjectId(),
+      // Eliminamos la clave `modulos` del documento JSON.
+      ...documento,
+      modulos: {},
+    };
+  
+    // Insertamos el objeto `newCurso` en la colección.
+    await colleccion.insert(newCurso);
+  
+    // Devolvemos un mensaje de éxito.
+    res.status(201).send({ status:201, message: "Created" });
+  }
+
+/*
 export async function postNewCurso(req, res){
     try{
         let db = await con();
@@ -28,18 +54,20 @@ export async function postNewCurso(req, res){
         let data = req.body;
         const newCurso = {
             _id: new ObjectId(),
-            ...data.curso,
-            modulos: [],
-            comentarios: []
+            ...data,
+            modulos: {},
+            comentarios: {},
+            palabrasClave: {},
         };
-        await colleccion.insertOne(newCurso);
+        await colleccion.insert(newCurso);
         res.status(201).send({ status:201, message: "Created" });
 
     } catch (error) {
         console.error(error);
         res.status(500).send({ status:500, message: "Internal Server Error" });
     }
-}
+}*/
+
 
 
 export async function getCursosEduador(req, res) {
@@ -58,8 +86,8 @@ export async function getCursosEduador(req, res) {
     } catch (error) {
         console.error(error);
         res.status(500).send({ status: 500, message: "Error interno del servidor" });
+        }
     }
-}
 
 export async function updateModulo(req, res){
     try{

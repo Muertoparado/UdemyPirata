@@ -5,7 +5,7 @@ import {loginUser,regLogin} from '../storage/dtoLogin.js';
 import { registerlogin,changePassword,logIn,logout, assignRoleToUser } from "../controller/registrar.js";
 import { calcularPromedioEstrellas, getCursoId, getCursoNom, getCursosf, getCursosn, getcAutor, postCom } from "../controller/cursos.js";
 import { limitQuery } from "../limit/config.js";
-import { getAllUsers } from "../controller/superAdmin.js";
+import { getAllUsers, updateUserRole } from "../controller/superAdmin.js";
 import { getCursosEduador, postModulo, postNewCurso, updateModulo } from "../controller/educador.js";
 import { getCursosUser, postAgregarCurso, postUltimoModulo, updateModuloVisto } from "../controller/estudiantes.js";
 import { contarUsuariosPorCursos, getPalabrasClave, insertarAvatar } from "../controller/utill.js";
@@ -14,11 +14,11 @@ function configurarApp() {
     const app = express();
     app.use(express.json());
     app.use(cookieParser());
-    app.use(session({
-        secret: process.env.JWT_PRIVATE_KEY,
-        resave: false,
-        saveUninitialized: false,
-      }));
+  //  app.use(session({
+//        secret: process.env.JWT_PRIVATE_KEY,
+ //       resave: false,
+ //       saveUninitialized: false,
+ //     }));
     return app;
 }
 const appLogin = configurarApp();
@@ -30,7 +30,7 @@ appLogin.post("/register",limitQuery(),regLogin,registerlogin);
 appLogin.post("/cpass",limitQuery(),changePassword);
 appLogin.post("/logout",logout);
 appLogin.get("/superadmin",limitQuery(),getAllUsers);
-appLogin.post("/superadmin/roles",limitQuery(), assignRoleToUser);
+appLogin.post("/superadmin/roles",limitQuery(), updateUserRole);
 
 
 appBack.get("/cursos",limitQuery(),getCursosn);//ordenados nombre
