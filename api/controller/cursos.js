@@ -53,6 +53,29 @@ export async function getCursoNom(req, res) {
     }
 }
 
+export async function getCursoId(req, res) {
+    try {
+        let db = await con();
+        let colleccion = db.collection("curso");
+        const id =req.params.id;
+        console.log(id);
+       //let ida= new ObjectId(id);
+        let results = await colleccion.findOne({
+            _id: new ObjectId(req.params.id),
+        });
+    
+        
+        if (!results) {
+            return res.status(404).send({ status: 404, message: "curso id no encontrado" });
+        }
+        res.status(200).json(results);
+       // res.send(results);
+
+    } catch (error) {
+        console.log(error); 
+        res.status(500).send({ status: 500, message: "Internal Server Error" });
+    }
+}
 
 /*
 export async function getCursoNom(req, res) {

@@ -8,6 +8,7 @@
     border-radius: 30px;
     filter: drop-shadow(0px 0px 30px rgba(209, 38, 197, 0.5));
     color:gainsboro;
+    overflow: hidden;
   }
   
   .card::after {
@@ -26,4 +27,14 @@
   
   .card:hover {
     filter: drop-shadow(0px 0px 30px rgba(209, 38, 197, 1));
+  }
+
+  .cargando img{
+  display: flex;
+  justify-content: center;
+  margin: 0 auto;
+  border-radius: 20%;
+  }
+  .cargando p {
+    text-align: center;
   }

@@ -13,11 +13,11 @@
     gap: 1em;
     position: relative;
   }
-  body{
-    background: url('../../img/original-8c84d58757f2307620c18a5cd36e250f.mp4');
-    background-size: contain;
+  .body{
+    background-image: url('../../img/original-8c84d58757f2307620c18a5cd36e250f.mp4');
     background-repeat: no-repeat;
-    
+    background-size: cover;
+    position: fixed;
     animation-delay: 5s;
   }
   .input-container {

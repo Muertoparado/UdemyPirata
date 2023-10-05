@@ -128,8 +128,9 @@ import  { useContext } from 'react';
 import { TokenContext } from '../main.jsx';
 import '../styles/styles.css'
 import Curso from './CursoEspecifico.jsx';
-import { ErrorBoundary } from 'react-error-boundary';
-
+//import { ErrorBoundary } from 'react-error-boundary';
+import { Link } from 'react-router-dom';
+import CursoEspecifico from './CursoEspecifico.jsx';
 export default function CursosGeneral() {
   const token = useContext(TokenContext);
   const [isExpanded, setExpanded] = useState(false);
@@ -139,7 +140,7 @@ export default function CursosGeneral() {
 
   useEffect(() => {
     // Realizar la consulta a la API
-    const response = fetch(`http://${import.meta.env.VITE_HOSTNAME}:${import.meta.env.VITE_PORT_BACKEND}/curso/educador/miscursos`, {
+    const response = fetch(`http://${import.meta.env.VITE_HOSTNAME}:${import.meta.env.VITE_PORT_BACKEND}/curso/cursos`, {
       method: 'GET',
       credentials: 'include',
       headers: {
@@ -172,7 +173,12 @@ export default function CursosGeneral() {
   }, []);
 
   if (loading) {
-    return <p>Cargando cursos...</p>;
+    return (
+      <div className='cargando m-5'>
+      <img src='../../img/561596a5d8eb1d67f92a7dd8c00894d5.gif' />
+      <p className='justify-content-center m-2'>Cargando cursos...</p>
+    </div>
+    );
   }
 
   if (error) {
@@ -180,7 +186,7 @@ export default function CursosGeneral() {
   }
 
   return (
-    <ErrorBoundary>
+   
       <div>
         {eduCurso.map((curso) => (
           <div className='card p-5 m-5' key={curso.id}>
@@ -188,12 +194,12 @@ export default function CursosGeneral() {
             <h2>{curso.nombre}</h2>
             <p>{curso.descripcion}</p>
 
-            <Link to={`./CursoEspecifico/${curso.id}`}>
-              <button>Ver más</button>
+            <Link to={`./CursoEspecifico/${curso._id}`}>
+            <button onClick={() => CursoEspecifico(curso._id)}>Ver más</button>
             </Link>
 
             {isExpanded === curso && (
-           <Link to={`./CursoEspecifico/${curso.id}`}>
+           <Link to={`./CursoEspecifico/${curso._id}`}>
           
            <Curso curso={curso} />
            
@@ -203,6 +209,5 @@ export default function CursosGeneral() {
         </div>
       ))}
     </div>
-    </ErrorBoundary>
   );
 }

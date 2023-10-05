@@ -24,7 +24,7 @@ import ReactDOM from 'react-dom/client';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Login from './components/Login.jsx';
 import Home from './components/Home.jsx';
-import Curso from './components/CursoEspecifico.jsx';
+import CursoEspecifico from './components/CursoEspecifico.jsx';
 
 // Define the TokenContext
 export const TokenContext = React.createContext(null);
@@ -44,7 +44,8 @@ ReactDOM.createRoot(document.querySelector('#root')).render(
         <Routes>
           <Route path="/home" element={<Home />} />
           <Route path="/login" element={<Login />} />
-          <Route path="CursoEspecifico" element={<Curso/>}/>
+          <Route path="/home/CursoEspecifico/:id" element={<CursoEspecifico />}/>
+          
         </Routes>
       </BrowserRouter>
     </TokenContext.Provider>

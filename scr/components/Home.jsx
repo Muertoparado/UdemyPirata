@@ -9,6 +9,7 @@ export default function Home() {
       <h1>Welcome to the Home Page</h1>
       {/* Other content for the Home page */}
       <CursosGeneral />
+      
     </div>
   );
 }

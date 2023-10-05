@@ -3,7 +3,7 @@ import rateLimit from "express-rate-limit";
 export let limitQuery = ()=>{
     return rateLimit({
         windowMs: 10 * 1000,
-        max: 5,
+        max: 15,
         standardHeaders: true, 
         legacyHeaders: false, 
         skip: (req,res)=>{
