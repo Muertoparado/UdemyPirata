@@ -92,36 +92,42 @@ const CursoEspecifico = ({ id }) => {
 export default CursoEspecifico;
 
 */
+
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
-const CursoEspecifico = ({ l }) => {
+
+const CursoEspecifico = () => {
   const [curso, setCurso] = useState();
-  const [id, setId] = useState(l);
+  const [error, setError] = useState(null);
+
+  const { id } = useParams();
 
   useEffect(() => {
-    let id = l;
-
-    if (isNaN(id)) {
-      // Mostrar un mensaje de error
-    } else {
-      const response = fetch(`http://${import.meta.env.VITE_HOSTNAME}:${import.meta.env.VITE_PORT_BACKEND}/curso/cursoid/${id}`, {
-        method: 'GET',
-        credentials: 'include',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
-        .then(response => response.json())
-        .then(curso => {
-          setCurso(curso);
-          setId(curso.id);
-        })
-        .catch(error => {
-          // Mostrar un mensaje de error
-        });
-    }
+    fetch(`http://${import.meta.env.VITE_HOSTNAME}:${import.meta.env.VITE_PORT_BACKEND}/curso/cursoid/${id}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+    .then(async (response) => {
+      if (!response.ok) {
+        console.log(response.status, response.statusText);
+      } else {
+        const data = await response.json();
+        console.log(data);
+        setCurso(data);
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+      setError(error.message);
+    });
   }, [id]);
+
+  if (error) {
+    return <p>Error: {error}</p>;
+  }
 
   return (
     <div>
@@ -130,7 +136,6 @@ const CursoEspecifico = ({ l }) => {
           <img src={curso.imagen} alt={curso.nombre} />
           <h2>{curso.nombre}</h2>
           <p>{curso.descripcion}</p>
-          <Curso curso={curso} />
         </div>
       )}
     </div>
@@ -138,4 +143,3 @@ const CursoEspecifico = ({ l }) => {
 };
 
 export default CursoEspecifico;
-

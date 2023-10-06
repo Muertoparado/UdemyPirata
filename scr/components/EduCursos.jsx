@@ -68,11 +68,10 @@ export default function eduCursos() {
           </button>
 
           {isExpanded === curso && (
-           <Link to={`./CursoEspecifico/${curso.id}`}>
+          <Link to={`./CursoEspecifico/${curso.id}`}>
           
-           <Curso curso={curso} />
-           
-         </Link>
+          <Curso curso={curso} />   
+        </Link>
           )}
 
         </div>

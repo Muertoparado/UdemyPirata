@@ -186,26 +186,22 @@ export default function CursosGeneral() {
   }
 
   return (
-   
-      <div>
-        {eduCurso.map((curso) => (
-          <div className='card p-5 m-5' key={curso.id}>
-             <img src={curso.imagen} alt={curso.nombre} />
-            <h2>{curso.nombre}</h2>
-            <p>{curso.descripcion}</p>
+    <div>
+      {eduCurso.map((curso) => (
+        <div className='card p-5 m-5' key={curso.id}>
+          <img src={curso.imagen} alt={curso.nombre} />
+          <h2>{curso.nombre}</h2>
+          <p>{curso.descripcion}</p>
 
+          <Link to={`./CursoEspecifico/${curso._id}`}>
+            <button onClick={() => setExpanded(curso._id)}>Ver más</button>
+          </Link>
+
+          {isExpanded === curso._id && (
             <Link to={`./CursoEspecifico/${curso._id}`}>
-            <button onClick={() => CursoEspecifico(curso._id)}>Ver más</button>
+              <CursoEspecifico curso={curso} />
             </Link>
-
-            {isExpanded === curso && (
-           <Link to={`./CursoEspecifico/${curso._id}`}>
-          
-           <Curso curso={curso} />
-           
-         </Link>
           )}
-
         </div>
       ))}
     </div>
