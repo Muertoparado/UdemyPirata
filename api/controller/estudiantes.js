@@ -20,7 +20,7 @@ export async function getCursosUser(userId){
 export async function updateModuloVisto(req, res){
     try{
         let db = await con();
-        let colleccion = db.collection("usuarios");
+        let colleccion = db.collection("usuario");
         let data = req.body;
         const historial = {
             modulo: data.idModulo,
@@ -41,7 +41,7 @@ export async function updateModuloVisto(req, res){
 export async function postUltimoModulo(idUsuario, idModulo) {
     try {
         let db = await con();
-        let colleccion = db.collection("usuarios");
+        let colleccion = db.collection("usuario");
         const historial = {
             modulo: idModulo,
             fecha: new Date()
@@ -58,7 +58,7 @@ export async function postUltimoModulo(idUsuario, idModulo) {
 export async function postAgregarCurso(idUsuario, nuevoCurso) {
     try {
         let db = await con();
-        let colleccion = db.collection("usuarios");
+        let colleccion = db.collection("usuario");
         await colleccion.updateOne(
             { _id: ObjectId(idUsuario) },
             { $push: { cursos: nuevoCurso } }

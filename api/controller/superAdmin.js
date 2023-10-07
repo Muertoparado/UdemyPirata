@@ -45,18 +45,18 @@ export async function updateUserRole(req, res) {
   }
 
   // Convierte el userId a un objeto ObjectId.
-  const userId = new ObjectId(data.userId);
+  const userId = (data.userId);
 
   // Creamos el documento de actualización.
   const updateDocument = {
     $set: {
-      rol: data.role,
+      rol: data.rol,
     },
   };
 
   // Actualizamos el rol del usuario.
   const db = await con();
-  const result = await db.collection('usuario').updateOne(
+  const result = await db.collection('login').updateOne(
     { _id: userId },
     updateDocument
   );

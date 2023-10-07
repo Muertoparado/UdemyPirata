@@ -139,7 +139,7 @@ export async function deleteCursos(req, res){
     }
 }
 
-export async function getcAutor(){
+export async function getcAutor(autor){
     try {
         const db = await con();
         const collection = db.collection("curso");

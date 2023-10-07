@@ -17,6 +17,7 @@ export async function registerlogin(req, res) {
 	try {
 		const db = await con();
 		let colleccion = db.collection("login");
+		let usuarios = db.collection("usuario");
 		// Generar una sal segura
 		const salt = generateSalt();
 		// Generar un hash de contraseña seguro
@@ -32,7 +33,14 @@ export async function registerlogin(req, res) {
 		console.log("Inserting document:", newlogin);
         await colleccion.insertOne(newlogin);
 		
-		
+		const newUser = {
+			_id: new ObjectId(),
+			name:name,
+			email: email,
+		}
+		console.log("Inserting document:", newUser);
+		await usuarios.insertOne(newUser);
+
 	if (newlogin) {
 		console.log("enviado");
 		return res.status(201).json(newlogin);
