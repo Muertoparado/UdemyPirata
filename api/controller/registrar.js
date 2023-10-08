@@ -87,7 +87,7 @@ export async function logIn (req, res){
 	if (await bcrypt.compare(password, login.password)) {
 		const token = await createToken(login);
 		res.cookie("jwt", token, { httpOnly: true, expires: 0 }); // La cookie expirará cuando se cierre el navegador
-			return res.status(200).json({ token });
+			return res.status(200).json({ token, rol:login.rol });
 }
 	res.status(401).json("Wrong credentials!");
 }catch(error){
