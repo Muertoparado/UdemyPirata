@@ -17,39 +17,40 @@ export default function Login() {
 
         try {
             const response = await fetch(`http://${import.meta.env.VITE_HOSTNAME}:${import.meta.env.VITE_PORT_BACKEND}/login`, {
-                method: "POST",
-                credentials: "include",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    email: username,
-                    password: password,
-                }),
+              method: 'POST',
+              credentials: 'include',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({
+                email: username,
+                password: password,
+              }),
             });
-
+        
             if (response.ok) {
-                const data = await response.json();
-                const authToken = data.token;
-                const role = data.rol;
-                console.log(role);
-                if (role === "admin") {
-                    navigate("/superadmin");
-
-                } else if (role === "Estudiante") {
-                        navigate("/home");
-                } else if (role==="Educador") {
-                    navigate("/educador");
-                }
-
-                setToken(authToken);
+                
+              const data = await response.json();
+              const authToken = data.token;
+              const role = data.rol;
+              console.log('Token recibido:', authToken);
+              // Almacena el token en una cookie
+              document.cookie = `jwt=${authToken}`;
+        
+              if (role === 'admin') {
+                navigate('/superadmin');
+              } else if (role === 'Estudiante') {
+                navigate('/home');
+              } else if (role === 'Educador') {
+                navigate('/educador');
+              }
             } else {
-                alert("Nombre o contraseña erroneos!!");
+              alert('Nombre o contraseña incorrectos!!');
             }
-        } catch (error) {
+          } catch (error) {
             console.error(error);
-        }
-    }
+          }
+        };
 
     return (
         <>

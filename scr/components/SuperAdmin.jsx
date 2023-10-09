@@ -8,6 +8,8 @@ export default function SuperAdmin() {
   const [error, setError] = useState(null);
   const [showModal, setShowModal] = useState(false); // Nuevo estado para controlar el modal
   const [updatedUser, setUpdatedUser] = useState(null); 
+
+
   const updateUserRole = async (userId) => {
     const userToUpdate = user.find(usuario => usuario._id === userId); // Encuentra el usuario que se está actualizando
     setUpdatedUser(userToUpdate); 
@@ -83,7 +85,7 @@ export default function SuperAdmin() {
       <div className='card p-5 m-5' key={usuario.id}>
         <h2>{usuario.email}</h2>
         <p>{usuario.rol}</p>
-        <button classNameName='btn btn-primary' onClick={() => updateUserRole(usuario._id)}>Actualizar</button>
+        <button className='btn btn-primary' onClick={() => updateUserRole(usuario._id)}>Actualizar</button>
       </div>
     ))}
     <Modal show={showModal} onHide={() => setShowModal(false)}>

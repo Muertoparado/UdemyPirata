@@ -19,17 +19,19 @@ ReactDOM.createRoot(document.querySelector('#root')).render(
   </React.StrictMode>
 );*/
 
-import React from 'react';
+
+
+import React, { useContext } from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Login from './components/Login.jsx';
 import Home from './components/Home.jsx';
 import CursoEspecifico from './components/CursoEspecifico.jsx';
 import SuperAdmin from './components/SuperAdmin.jsx';
-import Ok from './components/Ok.jsx';
 import EduCursos from './components/EduCursos.jsx';
+import Ok from './components/Ok.jsx';
 
-// Define the TokenContext
+// Define el TokenContext
 export const TokenContext = React.createContext(null);
 
 function getCookie(token) {
@@ -47,10 +49,10 @@ ReactDOM.createRoot(document.querySelector('#root')).render(
         <Routes>
           <Route path="/home" element={<Home />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/home/CursoEspecifico/:id" element={<CursoEspecifico />}/>
-          <Route path='/superadmin' element={<SuperAdmin/>}/>
-          <Route patch='/educador' element={<EduCursos/>}/>
-          <Route patch='/ok' element={<Ok/>}/>
+          <Route path="/home/CursoEspecifico/:id" element={<CursoEspecifico />} />
+          <Route path='/superadmin' element={<SuperAdmin />} />
+          <Route path='/educador' element={<EduCursos />} />
+          <Route path='/ok' element={<Ok />} />
         </Routes>
       </BrowserRouter>
     </TokenContext.Provider>

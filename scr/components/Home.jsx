@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import Navbar from './NavBar.jsx';
 import CursosGeneral from './CursosGeneral.jsx';
+import { TokenContext } from '../main.jsx';
 
 export default function Home() {
+  const token = useContext(TokenContext);
   return (
     <div>
       <Navbar />
