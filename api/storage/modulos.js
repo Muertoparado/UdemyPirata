@@ -1,23 +1,25 @@
 import { body } from "express-validator";
 
+const titulo = body("title").trim().notEmpty().withMessage("Title cannot be empty")
+    .isString().withMessage("Title must be a string");
 
-const titulo= body("titulo").trim().notEmpty().withMessage("Parametros vacios!!")
-        .isString().withMessage("Tipo de dato incorrecto!")
+const img = body("img").trim().notEmpty().isString().withMessage("Image URL must be a string")
+    .withMessage("Image URL cannot be empty");
 
-const descripcion= body("email").trim().notEmpty().withMessage("Parametros vacios!!")
-        .isEmail().withMessage("Parametro email invalido!")
-        .isString().withMessage("Tipo de dato incorrecto!")
-    
-const palabrasc =  body("palabrasc").notEmpty().withMessage("Parametros vacios!!")
-        .isString().withMessage("Tipo de dato incorrecto!")
+const descripcion = body("description").trim().notEmpty().withMessage("Description cannot be empty")
+    .isString().withMessage("Description must be a string");
 
-const contenido= body("contenido").notEmpty().withMessage("Parametros vacios!!")
-        .isString().withMessage("Tipo de dato incorrecto!")
+const palabrasClave = body("keywords").isArray().withMessage("Keywords must be an array");
 
-const video = body("video")
+const video = body("video").trim().notEmpty().withMessage("Video URL cannot be empty")
+    .isString().withMessage("Video URL must be a string");
 
-//const modulo = [];
+const links = body("links").isArray().withMessage("Links must be an array");
 
+const idCurso = body("idCurso").withMessage("idCurso cannot be empty")
+    .isString().withMessage("idCurso must be a string");
 
-//const loginUser =[email,password];
-//export {regLogin,loginUser};
+const crearCurso = [titulo, img, descripcion, palabrasClave];
+const newModulo = [idCurso, titulo, descripcion, links, video, img];
+
+export { crearCurso, newModulo };

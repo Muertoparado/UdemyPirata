@@ -1,11 +1,9 @@
-
-import React, { useState, useEffect } from 'react';
-import  { useContext } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { TokenContext } from '../main.jsx';
 import '../styles/styles.css'
 import Curso from './CursoEspecifico.jsx';
 
-export default function eduCursos() {
+export default function EduCursos() {
   const token = useContext(TokenContext);
   const [isExpanded, setExpanded] = useState(false);
   const [eduCurso, seteduCurso] = useState([]);
@@ -13,9 +11,8 @@ export default function eduCursos() {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-
     // Realizar la consulta a la API
-    const response = fetch(`http://${import.meta.env.VITE_HOSTNAME}:${import.meta.env.VITE_PORT_BACKEND}/curso/educador/miscursos`, {
+    fetch(`http://${import.meta.env.VITE_HOSTNAME}:${import.meta.env.VITE_PORT_BACKEND}/curso/educador/miscursos`, {
       method: 'GET',
       credentials: 'include',
       headers: {
@@ -40,12 +37,7 @@ export default function eduCursos() {
         setError(error.message);
         setLoading(false);
       });
-  /*
-    // Devolver una función de limpieza para cerrar el socket WebSocket
-    return () => {
-      socket.close();
-    };*/
-  }, []);
+  }, [token]); // Agregar token como dependencia para que el efecto se ejecute de nuevo cuando cambie
 
   if (loading) {
     return <p>Cargando cursos...</p>;

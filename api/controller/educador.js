@@ -1,26 +1,32 @@
 import { con } from "../db/atlas.js";
 import { ObjectId } from "mongodb";
-export async function postModulo(req, res){
-    try{
+export async function postModulo(req, res) {
+    try {
         let db = await con();
         let colleccion = db.collection("curso");
         let data = req.body;
         const newModulo = {
-            _id: new ObjectId(),
-            ...data.modulo,
+          _id: new ObjectId(),
+          ...data.modulo,
         };
+        const curso = await colleccion.findOne({ _id: new ObjectId(data.idCurso) });
+        if (!curso) {
+          return res.status(404).send({ status: 404, message: "Curso not found" });
+        }
+        if (!Array.isArray(curso.modulos)) {
+          curso.modulos = [];
+        }
+        curso.modulos.push(newModulo);
         await colleccion.updateOne(
-            { _id: ObjectId(data.idCurso) },
-            { $push: { modulos: newModulo } }
+          { _id: new ObjectId(data.idCurso) },
+          { $set: { modulos: curso.modulos } }
         );
-        res.status(201).send({ status:201, message: "Created" });
-
-    } catch (error) {
+        res.status(201).send({ status: 201, message: "Created" });
+      } catch (error) {
         console.error(error);
-        res.status(500).send({ status:500, message: "Internal Server Error" });
+        res.status(500).send({ status: 500, message: "Internal Server Error" });
+      }
     }
-}
-
 export async function postNewCurso(req, res) {
     // Obtenemos la conexión a MongoDB.
     let db = await con();

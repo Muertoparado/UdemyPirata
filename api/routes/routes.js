@@ -9,6 +9,7 @@ import { getAllUsers, updateUserRole } from "../controller/superAdmin.js";
 import { getCursosEduador, postModulo, postNewCurso, updateModulo } from "../controller/educador.js";
 import { getCursosUser, postAgregarCurso, postUltimoModulo, updateModuloVisto } from "../controller/estudiantes.js";
 import { contarUsuariosPorCursos, getPalabrasClave, insertarAvatar } from "../controller/utill.js";
+//import { crearCurso, newModulo } from "../storage/modulos.js";
 
 function configurarApp() {
     const app = express();
