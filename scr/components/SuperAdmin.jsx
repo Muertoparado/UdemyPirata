@@ -1,12 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { Navigate } from 'react-router-dom';
+import { Modal, Button } from 'react-bootstrap'; // Asegúrate de tener react-bootstrap instalado
 
 export default function SuperAdmin() {
   const [user,setUser]=useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-
+  const [showModal, setShowModal] = useState(false); // Nuevo estado para controlar el modal
+  const [updatedUser, setUpdatedUser] = useState(null); 
   const updateUserRole = async (userId) => {
+    const userToUpdate = user.find(usuario => usuario._id === userId); // Encuentra el usuario que se está actualizando
+    setUpdatedUser(userToUpdate); 
     try {
       const response = await fetch(`http://${import.meta.env.VITE_HOSTNAME}:${import.meta.env.VITE_PORT_BACKEND}/login/superadmin/roles`, {
         method: "POST",
@@ -21,14 +25,14 @@ export default function SuperAdmin() {
     });
 
     if (response.ok) {
-       Navigate("/ok")
-    } else {
-        alert("Nombre o contraseña erroneos!!");
-    }
-  } catch (error) {
-    console.error(error);
-  }
-  }
+      setShowModal(true); // Muestra el modal cuando la respuesta es ok
+   } else {
+       alert("Nombre o contraseña erroneos!!");
+   }
+ } catch (error) {
+   console.error(error);
+ }
+ }
 
   useEffect(() => {
     // Realizar la consulta a la API
@@ -82,7 +86,17 @@ export default function SuperAdmin() {
         <button classNameName='btn btn-primary' onClick={() => updateUserRole(usuario._id)}>Actualizar</button>
       </div>
     ))}
-    
+    <Modal show={showModal} onHide={() => setShowModal(false)}>
+        <Modal.Header closeButton>
+          <Modal.Title>Usuario actualizado</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>El usuario {updatedUser?.email} se ha actualizado correctamente.</Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={() => setShowModal(false)}>
+            Cerrar
+          </Button>
+        </Modal.Footer>
+      </Modal>
   </div>
     )
 }

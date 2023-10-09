@@ -38,6 +38,8 @@ export default function Login() {
 
                 } else if (role === "Estudiante") {
                         navigate("/home");
+                } else if (role==="Educador") {
+                    navigate("/educador");
                 }
 
                 setToken(authToken);
