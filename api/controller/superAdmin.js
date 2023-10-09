@@ -4,13 +4,14 @@ import { ObjectId } from "mongodb";
 export async function getAllUsers(req, res) {
   try {
     const db = await con();
-    const users = await db.collection('login').find().toArray();
+    const users = await db.collection('login').find({ rol: { $ne: 'admin' } }).toArray();
     res.status(200).json(users);
   } catch (err) {
     console.error("Error al obtener usuarios:", err);
     res.status(500).json({ message: err.message });
   }
 }
+
 /*
 export async function updateUserRole(req, res) {
   let data = req.body;

@@ -125,14 +125,14 @@ function fetchCursosDefault({ url }) {
 
 import React, { useState, useEffect } from 'react';
 import  { useContext } from 'react';
-import { TokenContext } from '../main.jsx';
+//import { TokenContext } from '../main.jsx';
 import '../styles/styles.css'
 import Curso from './CursoEspecifico.jsx';
 //import { ErrorBoundary } from 'react-error-boundary';
 import { Link } from 'react-router-dom';
 import CursoEspecifico from './CursoEspecifico.jsx';
 export default function CursosGeneral() {
-  const token = useContext(TokenContext);
+  //const token = useContext(TokenContext);
   const [isExpanded, setExpanded] = useState(false);
   const [eduCurso, setEduCurso] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -145,7 +145,7 @@ export default function CursosGeneral() {
       credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`,
+    //    'Authorization': `Bearer ${token}`,
       },
     })
       .then(async (response) => {
