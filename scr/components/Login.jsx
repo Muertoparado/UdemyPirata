@@ -9,7 +9,7 @@ export default function Login() {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [showPassword, setShowPassword] = useState(false);
-    const [token, setToken] = useState();
+   // const [token, setToken] = useState();
     const navigate = useNavigate();
 
     const handleSubmit = async (event) => {
@@ -33,9 +33,10 @@ export default function Login() {
               const data = await response.json();
               const authToken = data.token;
               const role = data.rol;
-              console.log('Token recibido:', authToken);
+              const email=data.email;
+              console.log('Token recibido:', authToken,email);
               // Almacena el token en una cookie
-              document.cookie = `jwt=${authToken}`;
+              document.cookie = `jwt=${authToken,email}`;
         
               if (role === 'admin') {
                 navigate('/superadmin');
@@ -69,9 +70,9 @@ export default function Login() {
                                             <h3 className='m-3'>Iniciar Sesion</h3>
                                             <input id="usuario" placeholder='Digite su Email' value={username} onChange={(e) => setUsername(e.target.value)}></input>
                                             <input type={showPassword ? "text" : "password"} id="contraseña" placeholder='Digite su Contraseña' value={password} onChange={(e) => setPassword(e.target.value)}></input>
-                                            <input type="checkbox" classNameName="form-check-input" id="check" onClick={() => setShowPassword(!showPassword)} />
-                                            <label classNameName="form-check-label">Ver contrasena</label>
-                                            <button classNameName='btn btn-primary' onClick={handleSubmit}>Entrar</button>
+                                            <input type="checkbox" className="form-check-input" id="check" onClick={() => setShowPassword(!showPassword)} />
+                                            <label className="form-check-label">Ver contrasena</label>
+                                            <button className='btn btn-primary' onClick={handleSubmit}>Entrar</button>
                                         </div>
                                     </div>
                                 </div>

@@ -1,4 +1,4 @@
-import { ObjectId } from "mongodb";
+import { ObjectId } from "javascriptdb";
 
 use("Udemy");
 db.createCollection("login", {
@@ -33,144 +33,222 @@ db.createCollection("login", {
 
 use("Udemy");
 db.createCollection("curso", {
-validator: {
+  validator: {
     $jsonSchema: {
-    bsonType: "object",
-    required: ["_id", "nombre", "descripcion", "modulos"],
-    properties: {
+      bsonType: "object",
+      required: ["_id", "nombre", "descripcion", "modulos", "autor", "fecha_creacion", "palabrasClave", "imagen"],
+      properties: {
         _id: {
-        bsonType: "objectId",
-        description: "ID del curso",
+          bsonType: "objectId",
+          description: "ID del curso",
         },
         nombre: {
-            bsonType: "string",
-            description: "Nombre del curso",
-          },
-          descripcion: {
-            bsonType: "string",
-            description: "Descripción del curso",
-          },
-          modulos: {
-            bsonType: "object", // Ahora se espera un objeto JSON en "modulos"
-            description: "Módulos del curso (objeto JSON)",
-            patternProperties: {
-              "^[0-9]+$": {
-                bsonType: "object", // Se espera un objeto JSON para cada módulo
-                properties: {
-                  sectionName: {
-                    bsonType: "string",
-                    description: "Nombre de la sección",
-                  },
-                  videos: {
-                    bsonType: "array", // Se espera un array de videos
-                    items: {
-                      bsonType: "object", // Se espera un objeto JSON para cada video
+          bsonType: "string",
+          description: "Nombre del curso",
+        },
+        descripcion: {
+          bsonType: "string",
+          description: "Descripción del curso",
+        },
+        modulos: {
+          bsonType: "array",
+          description: "Módulos del curso (array de objetos)",
+          items: {
+            bsonType: "object",
+            required: ["titulo", "descripcion", "clases"],
+            properties: {
+              titulo: {
+                bsonType: "string",
+                description: "Título del módulo",
+              },
+              descripcion: {
+                bsonType: "string",
+                description: "Descripción del módulo",
+              },
+              clases: {
+                bsonType: "array",
+                description: "Clases del módulo (array de objetos)",
+                items: {
+                  bsonType: "object",
+                  required: ["titulo", "descripcion", "video"],
+                  properties: {
+                    titulo: {
+                      bsonType: "string",
+                      description: "Título de la clase",
+                    },
+                    descripcion: {
+                      bsonType: "string",
+                      description: "Descripción de la clase",
+                    },
+                    links: {
+                      bsonType: "object",
                       properties: {
-                        Titulo: {
+                        github: {
                           bsonType: "string",
-                          description: "Título del video",
+                          description: "Enlace de GitHub de la clase",
                         },
-                        video: {
+                        website: {
                           bsonType: "string",
-                          description: "Nombre del video",
-                        },
-                        links: {
-                          bsonType: "object", // Se espera un objeto JSON para los links
+                          description: "Enlace del sitio web de la clase",
                         },
                       },
+                    },
+                    video: {
+                      bsonType: "string",
+                      description: "Enlace al video de la clase",
                     },
                   },
                 },
               },
             },
           },
-          autor: {
+        },
+        autor: {
+          bsonType: "string",
+          description: "Autor del curso",
+        },
+        fecha_creacion: {
+          bsonType: "date",
+          description: "Fecha de creación del curso",
+        },
+        palabrasClave: {
+          bsonType: "array",
+          description: "Palabras clave del curso",
+          items: {
             bsonType: "string",
-            description: "Autor del curso",
           },
-          fecha_creacion: {
-            bsonType: "date",
-            description: "Fecha de creación del curso",
-          },
-          palabrasClave:{
-            bsonType: "array",
-            description: "Comentarios del curso",
-          },
-          imagen:{
-            bsonType: "string",
-            description: "imagen del curso",
-
-          },
-          comentarios: {
-            bsonType: "array",
-            description: "Comentarios del curso",
-            items: {
-              bsonType: "object",
-              properties: {
-                comentario: {
-                  bsonType: "string",
-                  description: "Comentario del usuario",
-                },
-                fecha: {
-                  bsonType: "date",
-                  description: "Fecha del comentario",
-                },
-                estrellas: {
-                  bsonType: "int",
-                  description: "Calificación de estrellas del usuario",
-                },
+        },
+        imagen: {
+          bsonType: "string",
+          description: "URL de la imagen del curso",
+        },
+        comentarios: {
+          bsonType: "array",
+          description: "Comentarios del curso",
+          items: {
+            bsonType: "object",
+            properties: {
+              comentario: {
+                bsonType: "string",
+                description: "Comentario del usuario",
+              },
+              fecha: {
+                bsonType: "date",
+                description: "Fecha del comentario",
+              },
+              estrellas: {
+                bsonType: "int",
+                description: "Calificación de estrellas del usuario",
               },
             },
           },
         },
       },
     },
-  });
+  },
+});
 
 use("Udemy");
 db.curso.insertOne({
-  "_id":ObjectId("624a1a1c0c780c0001f4c332"),
-  "nombre": "Curso de Linux",
-  "descripcion": "Aprende linux desde cero",
-  "modulos": {
-    "sectionName": "Introducción a sql",
-    "videos": [
-      {
-        "Titulo": "Introducción a sql",
-        "video": "https://www.youtube.com/watch?v=624a1a1c0c780c0001f4c333",
-        "links": {
-          "github": "https://github.com/bard/curso-sql",
-          "website": "https://curso-sql.com",
+  "_id": ObjectId("624a2a4c4c680c0001f4c334"),
+  "nombre": "Javascript",
+  "descripcion": "Aprende javascript avanzado desde cero",
+  "modulos": [
+    {
+      "_id": ObjectId("622a4a4c0c780c0001f4c335"),
+      "titulo": "Introducción a javascript Avanzado",
+      "descripcion": "Módulo introductorio a javascript avanzado",
+      "clases": [
+        {
+          "titulo": "Clase 1: Introducción a javascript Avanzado",
+          "descripcion": "Descripción de la Clase 1",
+          "links": {
+            "github": "https://github.com/curso-javascript-avanzado/intro/clase1",
+            "website": "https://curso-javascript-avanzado.com/intro/clase1"
+          },
+          "video": "https://www.youtube.com/watch?v=video1_clase1"
         },
-      },
-      {
-        "Titulo": "Variables y tipos de datos",
-        "video": "https://www.youtube.com/watch?v=624a1a1c0c780c0001f4c334",
-        "links": {
-          "github": "https://github.com/bard/curso-sql/tree/master/variables",
-          "website": "https://curso-sql.com/variables-tipos-datos",
+        {
+          "titulo": "Clase 2: javascript Avanzado en la Práctica",
+          "descripcion": "Descripción de la Clase 2",
+          "links": {
+            "github": "https://github.com/curso-javascript-avanzado/intro/clase2",
+            "website": "https://curso-javascript-avanzado.com/intro/clase2"
+          },
+          "video": "https://www.youtube.com/watch?v=video1_clase2"
+        }
+      ]
+    },
+    {
+      "_id": ObjectId("621a4a6c0c280c0001f4c336"),
+      "titulo": "Consultas javascript Complejas",
+      "descripcion": "Módulo sobre consultas javascript avanzadas",
+      "clases": [
+        {
+          "titulo": "Clase 1: Consultas Avanzadas",
+          "descripcion": "Descripción de la Clase 1",
+          "links": {
+            "github": "https://github.com/curso-javascript-avanzado/consultas/clase1",
+            "website": "https://curso-javascript-avanzado.com/consultas/clase1"
+          },
+          "video": "https://www.youtube.com/watch?v=video2_clase1"
         },
-      },
-    ],
-  },
-  "autor": "sapo perro ",
-  "fecha_creacion": new Date(),
-  "palabrasClave": ["Linux", "curso", "programacion","hack"],
-  "imagen": "https://www.sql.org/static/img/sql-logo.png",
+        {
+          "titulo": "Clase 2: Consultas Avanzadas en la Práctica",
+          "descripcion": "Descripción de la Clase 2",
+          "links": {
+            "github": "https://github.com/curso-javascript-avanzado/consultas/clase2",
+            "website": "https://curso-javascript-avanzado.com/consultas/clase2"
+          },
+          "video": "https://www.youtube.com/watch?v=video2_clase2"
+        }
+      ]
+    },
+    {
+      "_id": ObjectId("621a4a1c0c786c0201f4c337"),
+      "titulo": "javascript y Rendimiento",
+      "descripcion": "Módulo sobre optimización de javascript",
+      "clases": [
+        {
+          "titulo": "Clase 1: Optimización de Consultas",
+          "descripcion": "Descripción de la Clase 1",
+          "links": {
+            "github": "https://github.com/curso-javascript-avanzado/rendimiento/clase1",
+            "website": "https://curso-javascript-avanzado.com/rendimiento/clase1"
+          },
+          "video": "https://www.youtube.com/watch?v=video3_clase1"
+        },
+        {
+          "titulo": "Clase 2: Mejoras de Rendimiento en javascript",
+          "descripcion": "Descripción de la Clase 2",
+          "links": {
+            "github": "https://github.com/curso-javascript-avanzado/rendimiento/clase2",
+            "website": "https://curso-javascript-avanzado.com/rendimiento/clase2"
+          },
+          "video": "https://www.youtube.com/watch?v=video3_clase2"
+        }
+      ]
+    }
+  ],
+  "autor": "juan oiipoioiji sdasd",
+  "fecha_creacion": new Date(1696424002020),
+  "palabrasClave": ["javascript", "curso avanzado","server" ,"bases de datos"],
+  "imagen": "https://www.javascript-avanzado.org/static/img/javascript-logo-avanzado.png",
   "comentarios": [
     {
-      "comentario": "Muy buen curso",
-      "fecha": new Date(),
-      "estrellas": 5,
+      "comentario": "Muy buen curso avanzado",
+      "fecha": new Date(4),
+      "estrellas": 5
     },
     {
-      "comentario": "Me ha gustado mucho",
-      "fecha": new Date(),
-      "estrellas": 2,
-    },
-  ],
-}
-)
+      "comentario": "Me ha gustado mucho este curso",
+      "fecha": new Date(5),
+      "estrellas": 4
+    }
+  ]
+})
+
+
 
 use("Udemy");
 db.curso.updateOne({
@@ -183,16 +261,16 @@ db.curso.updateOne({
         "Titulo": "Video 1",
         "video": "https://www.youtube.com/watch?v=624a1a1c0c780c0001f4c335",
         "links": {
-          "github": "https://github.com/bard/curso-sql/tree/master/nuevo_modulo/video_1",
-          "website": "https://curso-sql.com/nuevo_modulo/video_1",
+          "github": "https://github.com/bard/curso-javascript/tree/master/nuevo_modulo/video_1",
+          "website": "https://curso-javascript.com/nuevo_modulo/video_1",
         },
       },
       {
         "Titulo": "Video 2",
         "video": "https://www.youtube.com/watch?v=624a1a1c0c780c0001f4c336",
         "links": {
-          "github": "https://github.com/bard/curso-sql/tree/master/nuevo_modulo/video_2",
-          "website": "https://curso-sql.com/nuevo_modulo/video_2",
+          "github": "https://github.com/bard/curso-javascript/tree/master/nuevo_modulo/video_2",
+          "website": "https://curso-javascript.com/nuevo_modulo/video_2",
         },
       },
     ],
@@ -202,7 +280,7 @@ db.curso.updateOne({
 use("Udemy");
 db.curso.insertOne({
 _id:ObjectId('64f6935e6281ccb1a9338441'),
-nombre: "sql",
+nombre: "javascript",
 descripcion: "this course is the best",
 modulos: {
     "1": {

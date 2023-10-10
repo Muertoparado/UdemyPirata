@@ -29,7 +29,7 @@ app.use(cors({
 }))
 //app.use(saveRol);
 app.use("/login",appLogin);
-app.use("/curso",verifyTokenMiddleware,appBack);
+app.use("/curso",appBack);
 
 let config = JSON.parse(process.env.MY_SERVER);
 

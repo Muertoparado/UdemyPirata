@@ -124,8 +124,7 @@ function fetchCursosDefault({ url }) {
 */
 
 import React, { useState, useEffect } from 'react';
-import  { useContext } from 'react';
-import { TokenContext } from '../main.jsx';
+//import { TokenContext } from '../main.jsx';
 import '../styles/styles.css'
 //import { ErrorBoundary } from 'react-error-boundary';
 import { Link } from 'react-router-dom';
