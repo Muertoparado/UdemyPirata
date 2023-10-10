@@ -30,21 +30,22 @@ import CursoEspecifico from './components/CursoEspecifico.jsx';
 import SuperAdmin from './components/SuperAdmin.jsx';
 import EduCursos from './components/EduCursos.jsx';
 import Ok from './components/Ok.jsx';
+import { UserProvider } from './components/UserContex.jsx';
 
 // Define el TokenContext
 export const TokenContext = React.createContext(null);
 
-function getCookie(token) {
-  const value = `; ${document.cookie}`;
-  const parts = value.split(`; ${token}=`);
-  if (parts.length === 2) return parts.pop().split(';').shift();
-}
+//function getCookie(token) {
+//  const value = `; ${document.cookie}`;
+ // const parts = value.split(`; ${token}=`);
+ // if (parts.length === 2) return parts.pop().split(';').shift();
+//}
 
-const token = getCookie('token');
+//const token = getCookie('token');
 
 ReactDOM.createRoot(document.querySelector('#root')).render(
   <React.StrictMode>
-    <TokenContext.Provider value={token}>
+    <UserProvider>
       <BrowserRouter>
         <Routes>
           <Route path="/home" element={<Home />} />
@@ -55,6 +56,6 @@ ReactDOM.createRoot(document.querySelector('#root')).render(
           <Route path='/ok' element={<Ok />} />
         </Routes>
       </BrowserRouter>
-    </TokenContext.Provider>
+      </UserProvider>
   </React.StrictMode>
 );

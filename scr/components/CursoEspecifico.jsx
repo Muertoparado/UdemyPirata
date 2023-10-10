@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Row, Col, Dropdown, Button } from 'react-bootstrap';
 import { useParams, useLocation } from 'react-router-dom';
+import { useUser } from './UserContex';
 
 const CursoEspecifico = (props) => {
   const [curso, setCurso] = useState(null);
   const [error, setError] = useState(null);
 
   const { id } = useParams();
-  const location = useLocation();
-
+  //const location = useLocation();
+  const { user } = useUser();
   useEffect(() => {
     const fetchCurso = async () => {
       try {
@@ -49,7 +50,7 @@ const CursoEspecifico = (props) => {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          usuarioId: location.state.userId,
+          email: user,
           cursoId: CursoId,
         }),
       });

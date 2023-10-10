@@ -55,12 +55,12 @@ export async function postUltimoModulo(idUsuario, idModulo) {
         console.error("Error al guardar el último módulo visto:", error);
     }
 }
-export async function postAgregarCurso(idUsuario, nuevoCurso) {
+export async function postAgregarCurso(email, nuevoCurso) {
     try {
         let db = await con();
         let colleccion = db.collection("usuario");
         await colleccion.updateOne(
-            { _id: ObjectId(idUsuario) },
+            { email: email },
             { $push: { cursos: nuevoCurso } }
         );
         console.log("Nuevo curso agregado con éxito");

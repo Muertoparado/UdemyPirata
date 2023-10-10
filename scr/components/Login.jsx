@@ -4,39 +4,40 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import '../styles/login.css';
+import { useUser } from './UserContex';
 
 export default function Login() {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [showPassword, setShowPassword] = useState(false);
-   // const [token, setToken] = useState();
+    const [token, setToken] = useState();
     const navigate = useNavigate();
+    const { setUser } = useUser();
 
     const handleSubmit = async (event) => {
         event.preventDefault();
 
         try {
             const response = await fetch(`http://${import.meta.env.VITE_HOSTNAME}:${import.meta.env.VITE_PORT_BACKEND}/login`, {
-              method: 'POST',
-              credentials: 'include',
-              headers: {
-                'Content-Type': 'application/json',
-              },
-              body: JSON.stringify({
-                email: username,
-                password: password,
-              }),
+                method: 'POST',
+                credentials: 'include',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    email: username,
+                    password: password,
+                }),
             });
-        
+
             if (response.ok) {
                 
               const data = await response.json();
               const authToken = data.token;
               const role = data.rol;
-              const email=data.email;
-              console.log('Token recibido:', authToken,email);
+              console.log('Token recibido:', authToken);
               // Almacena el token en una cookie
-              document.cookie = `jwt=${authToken,email}`;
+              document.cookie = `jwt=${authToken}`;
         
               if (role === 'admin') {
                 navigate('/superadmin');
@@ -46,12 +47,12 @@ export default function Login() {
                 navigate('/educador');
               }
             } else {
-              alert('Nombre o contraseña incorrectos!!');
+                alert('Nombre o contraseña incorrectos!!');
             }
-          } catch (error) {
+        } catch (error) {
             console.error(error);
-          }
-        };
+        }
+    };
 
     return (
         <>
