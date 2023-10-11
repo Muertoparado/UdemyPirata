@@ -2,20 +2,20 @@ import { con } from "../db/atlas.js";
 import { ObjectId } from "mongodb";
 
 
-export async function getCursosUser(userId){
+export async function getCursosUser(req){
+    const { email } = req.body;
     try {
         let db = await con();
         let colleccion = db.collection("usuario");
         let user = await colleccion.findOne({
-            _id: ObjectId(userId)
-        }, {
-            projection: { cursos: 1 }
+            email: email
         });
         return user.cursos;
     } catch (error) {
         console.error(error);
     }
 }
+
 
 export async function updateModuloVisto(req, res){
     try{
@@ -55,13 +55,14 @@ export async function postUltimoModulo(idUsuario, idModulo) {
         console.error("Error al guardar el último módulo visto:", error);
     }
 }
-export async function postAgregarCurso(email, nuevoCurso) {
+export async function postAgregarCurso(req) {
+    const {email,cursoId}=req.body
     try {
         let db = await con();
         let colleccion = db.collection("usuario");
         await colleccion.updateOne(
             { email: email },
-            { $push: { cursos: nuevoCurso } }
+            { $push: { cursos: cursoId } }
         );
         console.log("Nuevo curso agregado con éxito");
     } catch (error) {

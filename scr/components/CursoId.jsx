@@ -47,9 +47,9 @@ const CursoEspecifico = (props) => {
   const saveCurso = async (CursoId) => {
     const user = 'est@ejemplo.com';
     try {
-      const response = await fetch(
-        `http://${import.meta.env.VITE_HOSTNAME}:${import.meta.env.VITE_PORT_BACKEND}/curso/estudiantes/agregarcurso`,
-        {
+        const response = await fetch(
+            `http://${import.meta.env.VITE_HOSTNAME}:${import.meta.env.VITE_PORT_BACKEND}/curso/cursoid/${id}`,
+            {
           method: 'POST',
           credentials: 'include',
           headers: {
@@ -72,17 +72,6 @@ const CursoEspecifico = (props) => {
       console.error(error);
     }
   };
-
-  useEffect(() => {
-    if (showModal) {
-      const timer = setTimeout(() => {
-        setShowModal(false);
-        navigate('/miscursos');
-      }, 2000);
-
-      return () => clearTimeout(timer);
-    }
-  }, [showModal, navigate]);
 
   const renderModules = () => {
     if (!curso || !curso.modulos || !Array.isArray(curso.modulos) || curso.modulos.length === 0) {
@@ -120,11 +109,11 @@ const CursoEspecifico = (props) => {
       <Row>
         <Col sm={8}>
           {curso && (
-            <div className='card p-5 m-5'>
+            <div className=' p-5 m-5'>
               <img src={curso.imagen} alt={curso.nombre} />
               <h2>{curso.nombre}</h2>
               <p>{curso.descripcion}</p>
-              <button className='btn btn-primary' onClick={() => saveCurso(curso._id)}>Guardar</button>
+              
             </div>
           )}
         </Col>
@@ -132,18 +121,9 @@ const CursoEspecifico = (props) => {
           {renderModules()}
         </Col>
       </Row>
-      <Modal show={showModal} onHide={() => setShowModal(false)}>
-        <Modal.Header closeButton>
-          <Modal.Title>Usuario actualizado</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>Agregado a mis cursos.</Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={() => setShowModal(false)}>
-            Cerrar
-          </Button>
-        </Modal.Footer>
-      </Modal>
+
     </Container>
+    
   );
 };
 

@@ -37,7 +37,7 @@ export default function Login() {
               const role = data.rol;
               console.log('Token recibido:', authToken);
               // Almacena el token en una cookie
-              document.cookie = `jwt=${authToken}`;
+              sessionStorage.setItem('jwt', authToken);
         
               if (role === 'admin') {
                 navigate('/superadmin');

@@ -31,6 +31,7 @@ import SuperAdmin from './components/SuperAdmin.jsx';
 import EduCursos from './components/EduCursos.jsx';
 import Ok from './components/Ok.jsx';
 import { UserProvider } from './components/UserContex.jsx';
+import MisCursos from './components/MisCursos.jsx';
 
 // Define el TokenContext
 export const TokenContext = React.createContext(null);
@@ -54,6 +55,7 @@ ReactDOM.createRoot(document.querySelector('#root')).render(
           <Route path='/superadmin' element={<SuperAdmin />} />
           <Route path='/educador' element={<EduCursos />} />
           <Route path='/ok' element={<Ok />} />
+          <Route path='/miscursos' element={<MisCursos/>}/>
         </Routes>
       </BrowserRouter>
       </UserProvider>

@@ -163,11 +163,6 @@ export default function CursosGeneral() {
         setError(error.message);
         setLoading(false);
       });
-  /*
-    // Devolver una función de limpieza para cerrar el socket WebSocket
-    return () => {
-      socket.close();
-    };*/
   }, []);
 
   if (loading) {
@@ -186,15 +181,17 @@ export default function CursosGeneral() {
   return (
     <div>
       {eduCurso.map((curso) => (
-        <div className='card p-5 m-5' key={curso.id}>
-          <img src={curso.imagen} alt={curso.nombre} />
+        <div className='card  mb-5' key={curso.id}>
+          <img className='mb-3' src={curso.imagen} alt={curso.nombre} />
+          <div className='p-3'>
           <h2>{curso.nombre}</h2>
           <p>{curso.descripcion}</p>
 
           <Link to={`./CursoEspecifico/${curso._id}`}>
             <button onClick={() => setExpanded(curso._id)}>Ver más</button>
           </Link>
-
+          </div>
+        
           {isExpanded === curso._id && (
             <Link to={`./CursoEspecifico/${curso._id}`}>
               <CursoEspecifico curso={curso} />

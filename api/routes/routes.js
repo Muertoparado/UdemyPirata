@@ -42,12 +42,12 @@ appBack.post("/curso/:autor/comentario",limitQuery(),postCom)//agregar comentari
 appBack.get("/cursoid/:id",limitQuery(),getCursoId);
 
 appBack.post("/educador",limitQuery(),postNewCurso)//seccion educador 
-appBack.get("/educador/miscursos",limitQuery(),getCursosEduador)//cursos educador
+appBack.post("/educador/miscursos",limitQuery(),getCursosEduador)//cursos educador
 appBack.post("/educador/modulo",limitQuery(),postModulo)//subir curso por modulo
 appBack.put("/educador/:curso/:modulo",limitQuery(),updateModulo)//editar modulo espcifico
 appBack.get("/educador/estudiantes",limitQuery())//de la parte de educador quienes estan recibiendo clases
 
-appBack.get("/estudiantes/cursos",limitQuery(),getCursosUser);//ver cursos de cada usuario
+appBack.post("/estudiantes/cursos",limitQuery(),getCursosUser);//ver cursos de cada usuario
 appBack.get("/estudiantes/historial",limitQuery(), updateModuloVisto)//ver ultima seccion vista 
 appBack.post("/estudiantes/agregarcurso",limitQuery(),postAgregarCurso)//agregar cursos como estudiante
 appBack.post("/estudiantes/:idUsuario/:idModulo",limitQuery(),postUltimoModulo)//guardar el ultimo modulo visto
