@@ -1,9 +1,11 @@
 .container {
+  margin: 0 ;
     font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
     font-style: italic;
     font-weight: bold;
     display: flex;
-    margin: auto;
+    margin: 0 auto;
+    padding: 50px;
     aspect-ratio: 16/9;
     align-items: center;
     justify-items: center;
@@ -12,17 +14,52 @@
     flex-direction: column;
     gap: 1em;
     position: relative;
+    color: #fff;
   }
-  .body{
-    background-image: url('../../img/original-8c84d58757f2307620c18a5cd36e250f.mp4');
-    background-repeat: no-repeat;
-    background-size: cover;
-    position: fixed;
-    animation-delay: 5s;
+  body{
+    background-color: #212121;
   }
   .input-container {
     filter: drop-shadow(46px 36px 24px #4090b5) drop-shadow(-55px -40px 25px #9e30a9);
     animation: blinkShadowsFilter 8s ease-in infinite;
+  }
+
+  .video-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -1;
+    opacity: 0.5; /* Ajusta la opacidad según tus necesidades */
+  }
+  .imagen {
+    display: none; 
+    width: 100%;
+    height: 400px;
+    position: relative;
+  
+    /* Muestra la imagen en pantallas con un ancho mínimo de 768px (tablets) */
+    @media screen and (min-width: 768px) {
+      display: block; /* Muestra la imagen en tablets */
+      width: 100%;
+      height: 59rem;
+      position: absolute;
+      left: 0; /* Posiciona la imagen en la parte izquierda de la pantalla */
+    }
+  
+    /* Muestra la imagen en pantallas con un ancho mínimo de 1024px (versiones web) */
+    @media screen and (min-width: 1024px) {
+      display: block; /* Muestra la imagen en versiones web */
+      width: 100%;
+      height: 59rem;
+      position: absolute;
+      left: 0; /* Posiciona la imagen en la parte izquierda de la pantalla */
+    }
+  }
+  .space{
+    margin: 80px;
   }
   
   .input-content {
@@ -178,12 +215,12 @@
   }
   
   .card-inner {
-    width: inherit;
-    height: inherit;
+    padding: 50px;
+    width: min-content;
+    height: min-content;
     background: rgba(255,255,255,.05);
     box-shadow: 0 0 10px rgba(0,0,0,0.25);
-    backdrop-filter: blur(10px);
-    border-radius: 8px;
+    border-radius: 10%;
   }
   
   .card:hover {

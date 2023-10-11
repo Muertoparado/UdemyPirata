@@ -129,6 +129,7 @@ import '../styles/styles.css'
 //import { ErrorBoundary } from 'react-error-boundary';
 import { Link } from 'react-router-dom';
 import CursoEspecifico from './CursoEspecifico.jsx';
+import { Col, Row } from 'react-bootstrap';
 export default function CursosGeneral() {
  // const token = useContext(TokenContext);
   const [isExpanded, setExpanded] = useState(false);
@@ -167,7 +168,7 @@ export default function CursosGeneral() {
 
   if (loading) {
     return (
-      <div className='cargando m-5'>
+      <div className='cargando  card m-5 p-4'>
       <img src='../../img/561596a5d8eb1d67f92a7dd8c00894d5.gif' />
       <p className='justify-content-center m-2'>Cargando cursos...</p>
     </div>
@@ -180,9 +181,11 @@ export default function CursosGeneral() {
 
   return (
     <div>
-      {eduCurso.map((curso) => (
+      <Row>
+        <Col sm={6}>
+        {eduCurso.map((curso) => (
         <div className='card  mb-5' key={curso.id}>
-          <img className='mb-3' src={curso.imagen} alt={curso.nombre} />
+          <img className='mb-3 imgx' src={curso.imagen} alt={curso.nombre} />
           <div className='p-3'>
           <h2>{curso.nombre}</h2>
           <p>{curso.descripcion}</p>
@@ -199,6 +202,8 @@ export default function CursosGeneral() {
           )}
         </div>
       ))}
+        </Col>
+      </Row>
     </div>
   );
 }

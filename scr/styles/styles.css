@@ -38,6 +38,25 @@
   .cargando p {
     text-align: center;
   }
+  .imgx{
+    width: 28rem;
+    height: 13rem;
+  }
+.cursos{
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 10px;
+}
+  .video-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -1;
+    opacity: 0.5; /* Ajusta la opacidad según tus necesidades */
+  }
   .drop {
     position: static;
     width: 40rem;
