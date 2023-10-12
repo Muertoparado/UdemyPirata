@@ -4,6 +4,7 @@ import { useParams, useLocation, Navigate } from 'react-router-dom';
 import { useUser } from './UserContex.jsx';
 import { useNavigate } from 'react-router-dom';
 import { Modal } from 'react-bootstrap';
+import Navbar from './NavBar.jsx';
 const CursoEspecifico = (props) => {
   const [curso, setCurso] = useState(null);
   const [error, setError] = useState(null);
@@ -116,14 +117,21 @@ const CursoEspecifico = (props) => {
   };
   
   return (
-    <Container>
+    <>
+    <Navbar>
+        {/* Contenido del Navbar */}
+      </Navbar>
+      <Container>
       <Row>
         <Col sm={8}>
           {curso && (
-            <div className='card p-5 m-5'>
-              <img src={curso.imagen} alt={curso.nombre} />
-              <h2>{curso.nombre}</h2>
-              <p>{curso.descripcion}</p>
+            <div className='card  mb-5'>
+              <img className='mb-3 imgx ' src={curso.imagen} alt={curso.nombre} />
+              <div className='p-3'>
+                  <h2>{curso.nombre}</h2>
+                  <p>{curso.descripcion}</p>
+              </div>
+              
               <button className='btn btn-primary' onClick={() => saveCurso(curso._id)}>Guardar</button>
             </div>
           )}
@@ -144,6 +152,8 @@ const CursoEspecifico = (props) => {
         </Modal.Footer>
       </Modal>
     </Container>
+    </>
+   
   );
 };
 

@@ -79,8 +79,11 @@ export default function SuperAdmin() {
   
     return (
       <div>
-        <h1>Usuarios Registrados</h1>
-    <p>Si desea actualizar a educador, dar click al boton actualizar.</p>
+        <video className="video-background" autoPlay muted loop>
+        <source src="../../img/original-8c84d58757f2307620c18a5cd36e250f.mp4" type="video/mp4" />
+      </video>
+        <h1 className='text-center text-white mt  -5'>Usuarios Registrados</h1>
+    <p className='text-center text-white'>Si desea actualizar a educador, dar click al boton actualizar.</p>
     {user.map((usuario) => (
       <div className='card p-5 m-5' key={usuario.id}>
         <h2>{usuario.email}</h2>

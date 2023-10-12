@@ -129,7 +129,7 @@ import '../styles/styles.css'
 //import { ErrorBoundary } from 'react-error-boundary';
 import { Link } from 'react-router-dom';
 import CursoEspecifico from './CursoEspecifico.jsx';
-import { Col, Row } from 'react-bootstrap';
+import { Col, Container, Row } from 'react-bootstrap';
 export default function CursosGeneral() {
  // const token = useContext(TokenContext);
   const [isExpanded, setExpanded] = useState(false);
@@ -180,30 +180,34 @@ export default function CursosGeneral() {
   }
 
   return (
-    <div>
-      <Row>
-        <Col sm={6}>
+    <div style={{ marginLeft: '20px', marginRight: '20px' }}>
+    <Container fluid>
+       <Row>
         {eduCurso.map((curso) => (
-        <div className='card  mb-5' key={curso.id}>
-          <img className='mb-3 imgx' src={curso.imagen} alt={curso.nombre} />
-          <div className='p-3'>
-          <h2>{curso.nombre}</h2>
-          <p>{curso.descripcion}</p>
-
-          <Link to={`./CursoEspecifico/${curso._id}`}>
-            <button onClick={() => setExpanded(curso._id)}>Ver más</button>
-          </Link>
-          </div>
-        
-          {isExpanded === curso._id && (
-            <Link to={`./CursoEspecifico/${curso._id}`}>
-              <CursoEspecifico curso={curso} />
-            </Link>
-          )}
-        </div>
-      ))}
-        </Col>
+          <Col className='m-5 ' sm={4} key={curso.id}>
+            <div className='card '>
+              <img className='mb-3 imgx' src={curso.imagen} alt={curso.nombre} />
+              <div className='p-3'>
+                <h2>{curso.nombre}</h2>
+                <p>{curso.descripcion}</p>
+                <div className="d-flex justify-content-center align-items-center">
+                  <Link to={`./CursoEspecifico/${curso._id}`}>
+                    <button className='btn btn-primary' onClick={() => setExpanded(curso._id)}>Ver más</button>
+                  </Link>
+                </div>
+              </div>
+              {isExpanded === curso._id && (
+                <Link to={`./CursoEspecifico/${curso._id}`}>
+                  <CursoEspecifico curso={curso} />
+                </Link>
+              )}
+            </div>
+          </Col>
+        ))}
       </Row>
+
+
+    </Container>
     </div>
-  );
+    );   
 }
