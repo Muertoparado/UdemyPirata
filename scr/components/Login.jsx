@@ -60,7 +60,7 @@ export default function Login() {
         <source src="../../img/original-8c84d58757f2307620c18a5cd36e250f.mp4" type="video/mp4" />
       </video>
        
-<Container className="body">
+<Container>
 <Row>
 <Col sm={8}>
 

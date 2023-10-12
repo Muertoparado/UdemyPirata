@@ -5,7 +5,7 @@ import react from '@vitejs/plugin-react-swc'
 export default defineConfig({
   // Configuración del servidor de desarrollo
   server: {
-    port: 3000,
+    port: 5223,
   },
   // Configuración del servidor WebSockets
   socket: {
